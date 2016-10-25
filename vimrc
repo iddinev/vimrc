@@ -1,116 +1,3 @@
-" =======================================
-" THIS VIMRC CREATED BY I. DINEV ON 07-2015
-" =======================================
-
-
-" VUNDLE
-  set nocompatible
-  filetype off
-
-  set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
-
-" let Vundle manage Vundle
-  Plugin 'VundleVim/Vundle.vim'
-  " Plugin 'gmarik/vundle'
-
-" The bundles you install will be listed here
-
-" Powerline setup
-  Plugin 'bling/vim-airline'
-  set laststatus=2
-  let g:airline_powerline_fonts = 1
-  " let g:airline_theme='mytheme'
-  let g:airline#extensions#tabline#show_buffers = 0
-  let g:airline#extensions#tabline#tab_min_count = 2
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
-
-" Nerdcomenter setup
-  Plugin 'scrooloose/nerdcommenter'
-  let NERDSpaceDelims = 1
-
-" Nerdtree setup
-  Plugin 'scrooloose/nerdtree'
-  let NERDTreeWinPos = 'right'
-  let NERDTreeWinSize = '60'
-
-" Python-mode setup
-  Plugin 'klen/python-mode'
-" **** edited file with core functions .vim/bundle/python-mode/autoload/pymode.vim
-" **** so that info windows (docs and such, not quickfix) open vertically right
-" **** func is pymode#tempbuffer_open
- let g:pymode = 1
- let g:pymode_options_colorcolumn = 0
- let g:pymode_options_max_line_length = 105
- " let g:pymode_python = 'python3'
- let g:pymode_rope = 1
- let g:pymode_lint_options_pep9 ={'max_line_length': g:pymode_options_max_line_length}
- let g:pymode_indent = 1
- let g:pymode_folding = 0
- let g:pymode_motion = 1
- let g:pymode_doc = 1
- let g:pymode_lint_signs = 0
- let g:pymode_doc_bind =  'K'
- let g:pymode_run = 1
- let g:pymode_run_bind = '<leader>r'
- let g:pymode_rope_complete_on_dot = 1
- let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'sys']
- let g:pymode_lint_on_write = 1
- let g:pymode_lint_message = 1
- " let g:pymode_rope_show_doc_bind =  '<C-c>d'
- let g:pymode_rope_show_doc_bind =  ''
-" THESE TWO PREVENT THE REFACTORING FROM PROPERLY WORKING !
- "let g:pymode_rope_project_root = '.'.expand('%:r')
- "let g:pymode_rope_ropefolder='.test'
- let g:pymode_rope_regenerate_on_write = 0
- let g:pymode_rope_completion = 1
- let g:pymode_rope_lookup_project = 0
- let g:pymode_syntax_slow_sync = 1
- let g:pymode_syntax_all = 1
- let g:pymode_syntax_builtin_objs = g:pymode_syntax_all
- let g:pymode_syntax_builtin_types = g:pymode_syntax_all
- " let g:pymode_rope_rename_bind = '<C-c>rr'
- let g:pymode_rope_rename_bind = ''
- "let g:pymode_rope_extract_method_bind = ''
-
-" Ropevim setup
-  "Plugin 'python-rope/ropevim'
-
-" Jedi-vim setup
-  Plugin 'davidhalter/jedi-vim'
-" edited jedi.vim/autoload jedi#show_documentation for vertical splits
-  let g:jedi#max_doc_height = ""
-  set noshowmode
-  let  g:jedi#show_call_signatures = 2
-  let g:jedi#use_splits_not_buffers = 'right'
-
-" Conque setup
-  " Plugin 'vim-scripts/Conque-Shell'
-" **** edited file .vim/plugin/conque_term.vim for the splitting of windows
-" **** func is conque_term#open
-  " let g:ConqueTerm_TERM = 'xterm-256color'
-  " let g:ConqueTerm_StartMessages = 0
-  " let g:ConqueTerm_Color = 1
-  " let g:ConqueTerm_ReadUnfocused = 0
-
-" Smart tabs setup
-" Plugin 'vim-scripts/Smart-Tabs'
-
-" Vim-bitbake setup
-" Plugin 'kergoth/vim-bitbake'
-
-" Vim git plugin
-  Plugin 'tpope/vim-fugitive'
-
-" Robot Framework plugin
-  " Plugin 'mfukar/robotframework-vim'
-
-  call vundle#end()
-  filetype plugin indent on
-" VUNDLE */
-
-
   set t_Co=256
   set encoding=utf-8
   filetype on
@@ -212,3 +99,49 @@
   " autocmd BufWritePre     * :call TrimWhiteSpace()
 
   " autocmd CompleteDone * pclose
+
+
+" VUNDLE
+  set nocompatible
+  filetype off
+
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
+
+" let Vundle manage Vundle
+  Plugin 'VundleVim/Vundle.vim'
+  " Plugin 'gmarik/vundle'
+
+" The bundles you install will be listed here
+
+" Powerline setup
+  Plugin 'bling/vim-airline'
+  set laststatus=2
+  let g:airline_powerline_fonts = 1
+  " let g:airline_theme='mytheme'
+  let g:airline#extensions#tabline#show_buffers = 0
+  let g:airline#extensions#tabline#tab_min_count = 2
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+
+" Nerdcomenter setup
+  Plugin 'scrooloose/nerdcommenter'
+  let NERDSpaceDelims = 1
+
+" Nerdtree setup
+  Plugin 'scrooloose/nerdtree'
+  let NERDTreeWinPos = 'right'
+  let NERDTreeWinSize = '60'
+
+" Jedi-vim setup
+  Plugin 'davidhalter/jedi-vim'
+  set noshowmode
+  let g:jedi#show_call_signatures = 2
+  let g:jedi#use_splits_not_buffers = 'right'
+
+" Vim git plugin
+  Plugin 'tpope/vim-fugitive'
+
+  call vundle#end()
+  filetype plugin indent on
+" VUNDLE */
