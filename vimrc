@@ -89,16 +89,6 @@
   nmap    <silent>    W       :tabnext<CR>
 
 
-" This is set so that python __docs__ show up as regular text with no
-" highlighting of any kind.
-  autocmd FileType rst   set filetype=text
-
-" Remove trailing whitespaces on file write.
-" TODO: Make sure this does not clash wit python plugins.
-  " autocmd FileWritePre    * :call TrimWhiteSpace()
-  " autocmd BufWritePre     * :call TrimWhiteSpace()
-
-  " autocmd CompleteDone * pclose
 
 
 " VUNDLE
@@ -110,19 +100,16 @@
 
 " let Vundle manage Vundle
   Plugin 'VundleVim/Vundle.vim'
-  " Plugin 'gmarik/vundle'
 
 " The bundles you install will be listed here
 
 " Powerline setup
-  Plugin 'bling/vim-airline'
+  Plugin 'vim-airline/vim-airline'
   set laststatus=2
-  let g:airline_powerline_fonts = 1
-  " let g:airline_theme='mytheme'
   let g:airline#extensions#tabline#show_buffers = 0
   let g:airline#extensions#tabline#tab_min_count = 2
   let g:airline#extensions#tabline#enabled = 1
-  let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+  let g:airline_symbols = {'maxlinenr': ''}
 
 " Nerdcomenter setup
   Plugin 'scrooloose/nerdcommenter'
