@@ -11,16 +11,16 @@
   set ruler
   set numberwidth=2
 
-  colorscheme elflord
+  " colorscheme elflord
 " Override of some specific color groups, override is independant of the selected scheme.
-  augroup mycolortweaks
-      au!
-      au ColorScheme * highlight Pmenu      ctermfg=214 ctermbg=237 guibg=Magenta
-      au ColorScheme * highlight PmenuSel   ctermfg=15  ctermbg=0   guibg=DarkGrey
-      au ColorScheme * highlight PmenuSbar              ctermbg=255 guibg=Grey
-      au ColorScheme * highlight PmenuThumb             ctermbg=243 guibg=White
-      au ColorScheme * highlight LineNr ctermfg=247
-  augroup END
+  " augroup mycolortweaks
+      " au!
+      " au ColorScheme * highlight Pmenu      ctermfg=214 ctermbg=237 guibg=Magenta
+      " au ColorScheme * highlight PmenuSel   ctermfg=15  ctermbg=0   guibg=DarkGrey
+      " au ColorScheme * highlight PmenuSbar              ctermbg=255 guibg=Grey
+      " au ColorScheme * highlight PmenuThumb             ctermbg=243 guibg=White
+      " au ColorScheme * highlight LineNr ctermfg=247
+  " augroup END
 
   syntax on
   set nopaste
@@ -99,6 +99,7 @@
   call vundle#begin()
 
 " let Vundle manage Vundle
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   Plugin 'VundleVim/Vundle.vim'
 
 " The bundles you install will be listed here
@@ -131,4 +132,10 @@
 
   call vundle#end()
   filetype plugin indent on
+
+" Vim nord colorscheme
+  Plugin 'arcticicestudio/nord-vim'
+  " colorscheme nord
+  Plugin 'drewtempelmeyer/palenight.vim'
+  Plugin 'mhartington/oceanic-next'
 " VUNDLE */
