@@ -1,5 +1,4 @@
 " TODO:
-" Configure ctrlp plugin or similar (fuzzy file searching plugin).
 " Configure ultisnips (snippet plugin).
 " Configure YouCompleteMe (autocompletion plugin) deprecate jedi-vim (python).
 
@@ -41,6 +40,15 @@
 " Vim git plugin
   Plug 'tpope/vim-fugitive'
 
+" Fuzzy file search.
+  Plug 'kien/ctrlp.vim'
+  let g:ctrlp_cmd = 'CtrlPMixed'
+  let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|sync)$',
+  \ 'file': '\v\.(exe|so|dll|pyc|pyo|swp|swo|out)$',
+  \ }
+
+" Vim colorschemes
   Plug 'arcticicestudio/nord-vim'
   Plug 'drewtempelmeyer/palenight.vim'
   Plug 'mhartington/oceanic-next'
@@ -165,4 +173,3 @@
   nmap    <silent>    <Right> :bn<CR>
   nmap    <silent>    H       :tabprevious<CR>
   nmap    <silent>    L       :tabnext<CR>
-  let g:deoplete#enable_at_startup = 1
