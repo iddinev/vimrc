@@ -1,3 +1,8 @@
+" TODO:
+" Configure ctrlp plugin or similar (fuzzy file searching plugin).
+" Configure ultisnips (snippet plugin).
+" Configure YouCompleteMe (autocompletion plugin) deprecate jedi-vim (python).
+
   set encoding=utf-8
   syntax on
 
@@ -40,6 +45,7 @@
   Plug 'drewtempelmeyer/palenight.vim'
   Plug 'mhartington/oceanic-next'
   Plug 'kristijanhusak/vim-hybrid-material'
+  Plug 'altercation/vim-colors-solarized'
 
 " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
@@ -66,7 +72,6 @@
   \       }
   \     }
   \   }
-  Plug 'altercation/vim-colors-solarized'
 
   call plug#end()
 
@@ -158,6 +163,6 @@
   nmap    <silent>    <Up>    :ls<CR>
   nmap    <silent>    <Left>  :bp<CR>
   nmap    <silent>    <Right> :bn<CR>
-  nmap    <silent>    Q       :tabprevious<CR>
-  nmap    <silent>    W       :tabnext<CR>
+  nmap    <silent>    H       :tabprevious<CR>
+  nmap    <silent>    L       :tabnext<CR>
   let g:deoplete#enable_at_startup = 1
