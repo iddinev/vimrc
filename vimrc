@@ -23,7 +23,6 @@
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='dark'
 
-
 " Nerdcomenter setup
   Plug 'scrooloose/nerdcommenter'
   let NERDSpaceDelims = 1
@@ -49,12 +48,6 @@
   \ 'dir':  '\v[\/]\.(git|hg|svn|sync)$',
   \ 'file': '\v\.(exe|so|dll|pyc|pyo|swp|swo|out)$',
   \ }
-
-" Vim colorschemes
-  Plug 'arcticicestudio/nord-vim'
-  Plug 'drewtempelmeyer/palenight.vim'
-  Plug 'mhartington/oceanic-next'
-  Plug 'kristijanhusak/vim-hybrid-material'
 
 " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
@@ -156,6 +149,8 @@
       endif
   endfunction
 
+  " Solarized has an issue that prevents it from
+  " being able to be switched to-from
   function! ToggleColorScheme()
   " mapped to F10
       if g:colors_name == 'PaperColor'
@@ -184,7 +179,6 @@
   nmap    <silent>    <F7>    :NERDTreeToggle<CR>
   nmap    <silent>    <F8>    :call ToggleWrap()<CR>
   nmap    <silent>    <F9>    :call ToggleLight()<CR>
-  nmap    <silent>    <F10>   :call ToggleColorScheme()<CR>
   nmap    <silent>    Q       <Nop>
   nmap    <silent>    <Up>    :ls<CR>
   nmap    <silent>    <Left>  :bp<CR>
