@@ -1,11 +1,15 @@
+" vim: set expandtab:
+
 " TODO:
 " Configure ultisnips (snippet plugin).
-" Configure YouCompleteMe (autocompletion plugin) deprecate jedi-vim (python).
+" Configure YouCompleteMe (autocompletion plugin), deprecate jedi-vim (python)?
 
   set encoding=utf-8
   syntax on
+  set modeline
 
 " Plug
+  " install curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   call plug#begin('~/.vim/plugged')
 
 " Vim statusline
@@ -23,8 +27,6 @@
 " Nerdcomenter setup
   Plug 'scrooloose/nerdcommenter'
   let NERDSpaceDelims = 1
-
-  Plug 'wincent/command-t'
 
 " Nerdtree setup
   Plug 'scrooloose/nerdtree'
@@ -53,7 +55,6 @@
   Plug 'drewtempelmeyer/palenight.vim'
   Plug 'mhartington/oceanic-next'
   Plug 'kristijanhusak/vim-hybrid-material'
-  Plug 'altercation/vim-colors-solarized'
 
 " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
@@ -81,6 +82,9 @@
   \     }
   \   }
 
+" Secondary colorscheme, requires its own terminal pallete.
+  Plug 'altercation/vim-colors-solarized'
+
   call plug#end()
 
   set background=dark
@@ -105,6 +109,7 @@
   set softtabstop=4
   set tabstop=4
   set shiftwidth=4
+  " Trailing whitespace is intentional.
   set listchars=tab:\|\ ,trail:\ 
   set list
   set number
@@ -116,8 +121,8 @@
 
   function! ProperPaste()
   " mapped to F3
-        :set number!
-        :set paste!
+      :set number!
+      :set paste!
   endfunction
 
   function! ToggleDiff()
@@ -131,7 +136,7 @@
   endfunction
 
   function! TrimWhiteSpace()
-          %s/\s\+$//e
+      %s/\s\+$//e
   endfunction
 
   function! ToggleWrap()
@@ -142,14 +147,26 @@
 
   function! ToggleLight()
   " mapped to F9
-      if g:airline_theme == 'dark'
+      if &background == 'dark'
           let g:airline_theme='papercolor'
           set background=light
-      elseif g:airline_theme == 'papercolor'
+      elseif &background == 'light'
           let g:airline_theme='dark'
           set background=dark
       endif
   endfunction
+
+  function! ToggleColorScheme()
+  " mapped to F10
+      if g:colors_name == 'PaperColor'
+          colorscheme solarized
+          syntax on
+      elseif g:colors_name  == 'solarized'
+          colorscheme PaperColor
+          syntax on
+      endif
+  endfunction
+
 
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
@@ -167,6 +184,7 @@
   nmap    <silent>    <F7>    :NERDTreeToggle<CR>
   nmap    <silent>    <F8>    :call ToggleWrap()<CR>
   nmap    <silent>    <F9>    :call ToggleLight()<CR>
+  nmap    <silent>    <F10>   :call ToggleColorScheme()<CR>
   nmap    <silent>    Q       <Nop>
   nmap    <silent>    <Up>    :ls<CR>
   nmap    <silent>    <Left>  :bp<CR>
