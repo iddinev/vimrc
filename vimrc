@@ -23,6 +23,11 @@
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='dark'
 
+" Autocompletion
+  Plug 'Valloric/YouCompleteMe'
+  let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+  " let g:ycm_extra_conf_globlist = ['ycm_extra_conf.py']
+
 " Nerdcomenter setup
   Plug 'scrooloose/nerdcommenter'
   let NERDSpaceDelims = 1
@@ -33,10 +38,10 @@
   let NERDTreeWinSize = '60'
 
 " Jedi-vim setup
-  Plug 'davidhalter/jedi-vim'
-  set noshowmode
-  let g:jedi#show_call_signatures = 2
-  let g:jedi#use_splits_not_buffers = 'right'
+  " Plug 'davidhalter/jedi-vim'
+  " set noshowmode
+  " let g:jedi#show_call_signatures = 2
+  " let g:jedi#use_splits_not_buffers = 'right'
 
 " Vim git plugin
   Plug 'tpope/vim-fugitive'
@@ -96,7 +101,8 @@
   set nopaste
   set wrap
   set textwidth=105
-  set scrolloff=999         " enables cursor to always be in the center of the screen when scrolling (when possible)
+  " enables cursor to always be in the center of the screen when scrolling (when possible)
+  set scrolloff=999
   set autoindent
   set smarttab
   set softtabstop=4
