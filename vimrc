@@ -4,15 +4,14 @@
 " Configure ultisnips (snippet plugin).
 " Configure YouCompleteMe (autocompletion plugin), deprecate jedi-vim (python)?
 
-  set encoding=utf-8
-  syntax on
-  set modeline
 
-" Plug
+  " PACKAGES (PLUG)
+  "======================
+
   " install curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   call plug#begin('~/.vim/plugged')
 
-" Vim statusline
+  " Vim statusline
   Plug 'vim-airline/vim-airline'
   set laststatus=2
   let g:airline#extensions#tabline#show_buffers = 0
@@ -23,38 +22,39 @@
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='dark'
 
-" Autocompletion
+  " Autocompletion
   Plug 'Valloric/YouCompleteMe'
-  let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+  " let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
   " let g:ycm_extra_conf_globlist = ['ycm_extra_conf.py']
 
-" Nerdcomenter setup
+  " Nerdcomenter setup
   Plug 'scrooloose/nerdcommenter'
   let NERDSpaceDelims = 1
 
-" Nerdtree setup
+  " Nerdtree setup
   Plug 'scrooloose/nerdtree'
   let NERDTreeWinPos = 'right'
   let NERDTreeWinSize = '60'
 
-" Jedi-vim setup
+  " Jedi-vim setup
   " Plug 'davidhalter/jedi-vim'
   " set noshowmode
   " let g:jedi#show_call_signatures = 2
   " let g:jedi#use_splits_not_buffers = 'right'
 
-" Vim git plugin
+  " Vim git plugin
   Plug 'tpope/vim-fugitive'
 
-" Fuzzy file search.
+  " Fuzzy file search.
   Plug 'kien/ctrlp.vim'
   let g:ctrlp_cmd = 'CtrlPMixed'
+  let g:ctrlp_working_path_mode = 'ra'
   let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn|sync)$',
   \ 'file': '\v\.(exe|so|dll|pyc|pyo|swp|swo|out)$',
   \ }
 
-" Main colorscheme
+  " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
   " so it is independant of the terminal pallette .
   " The terminal pallete can still be used through the override functionality.
@@ -80,10 +80,18 @@
   \     }
   \   }
 
-" Secondary colorscheme, requires its own terminal pallete.
+  " Secondary colorscheme, requires its own terminal pallete.
   Plug 'altercation/vim-colors-solarized'
 
   call plug#end()
+
+
+  " GENERAL
+  "======================
+
+  set encoding=utf-8
+  syntax on
+  set modeline
 
   set background=dark
   colorscheme PaperColor
@@ -97,7 +105,6 @@
   set ruler
   set numberwidth=2
 
-  syntax on
   set nopaste
   set wrap
   set textwidth=105
@@ -110,6 +117,7 @@
   set shiftwidth=4
   " Trailing whitespace is intentional.
   set listchars=tab:\|\ ,trail:\ 
+  let g:show_special_chars=0
   set list
   set number
   set autochdir
@@ -117,6 +125,13 @@
   set splitbelow
   set ffs=unix
   set diffopt+=vertical
+
+  " Show trailing white spaces & tabs with the Curosr HL group color.
+  match Cursor '\s\+$'
+
+
+  " FUNCTIONS
+  "======================
 
   function! ProperPaste()
   " mapped to F3
@@ -155,6 +170,17 @@
       endif
   endfunction
 
+  function! ToggleSpecialChars()
+  " mapped to F5
+      if g:show_special_chars == 0
+          set listchars=tab:\|\ ,trail:\ 
+          let g:show_special_chars = 1
+      elseif g:show_special_chars == 1
+          set listchars=tab:>-,trail:-,eol:$
+          let g:show_special_chars = 0
+     endif
+  endfunction
+
   " Solarized has an issue that prevents it from
   " being able to be switched to-from
   function! ToggleColorScheme()
@@ -169,8 +195,8 @@
   endfunction
 
 
-  " Show trailing white spaces & tabs with the Curosr HL group color.
-  match Cursor '\s\+$'
+  " REMAPS
+  "======================
 
   map                 <c-j>   <c-w>j
   map                 <c-k>   <c-w>k
@@ -180,7 +206,7 @@
   nmap    <silent>    [l      :lp<CR>
   nmap    <silent>    <F3>    :call ProperPaste()<CR>
   nmap    <silent>    <F4>    :set hlsearch!<CR>
-  nmap    <silent>    <F5>    :set list!<CR>
+  nmap    <silent>    <F5>    :call ToggleSpecialChars()<CR>
   nmap    <silent>    <F6>    :call ToggleDiff()<CR>
   nmap    <silent>    <F7>    :NERDTreeToggle<CR>
   nmap    <silent>    <F8>    :call ToggleWrap()<CR>
