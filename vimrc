@@ -5,6 +5,9 @@
 " Configure YouCompleteMe (autocompletion plugin), deprecate jedi-vim (python)?
 
 
+  syntax on
+
+
   " PACKAGES (PLUG)
   "======================
 
@@ -24,8 +27,10 @@
 
   " Autocompletion
   Plug 'Valloric/YouCompleteMe'
-  " let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
-  " let g:ycm_extra_conf_globlist = ['ycm_extra_conf.py']
+  let g:ycm_goto_buffer_command = 'vertical-split'
+
+  "Better syntax highlighting
+  Plug 'sheerun/vim-polyglot'
 
   " Nerdcomenter setup
   Plug 'scrooloose/nerdcommenter'
@@ -95,6 +100,8 @@
 
   set background=dark
   colorscheme PaperColor
+  " Do not highlight the relative line number.
+  highlight! link CursorLineNr LineNr
 
   set mouse=a
   set omnifunc=syntaxcomplete#Complete
@@ -120,6 +127,7 @@
   let g:show_special_chars=0
   set list
   set number
+  set relativenumber
   set autochdir
   set splitright
   set splitbelow
@@ -217,3 +225,8 @@
   nmap    <silent>    <Right> :bn<CR>
   nmap    <silent>    H       :tabprevious<CR>
   nmap    <silent>    L       :tabnext<CR>
+  " YouCompleteMe (still testing)
+  nmap    <silent>    <Leader>d    :YcmCompleter GoToDefinition<CR>
+  nmap    <silent>    <Leader>g    :YcmCompleter GoToDeclaration<CR>
+  nmap    <silent>    <Leader>i    :YcmCompleter GoToInclude<CR>
+  nmap    <silent>    K            :YcmCompleter GetDoc<CR>
