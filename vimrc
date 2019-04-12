@@ -172,9 +172,11 @@
       if &background == 'dark'
           let g:airline_theme='papercolor'
           set background=light
+          highlight! link CursorLineNr LineNr
       elseif &background == 'light'
           let g:airline_theme='dark'
           set background=dark
+          highlight! link CursorLineNr LineNr
       endif
   endfunction
 
