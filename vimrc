@@ -88,6 +88,11 @@
   " Secondary colorscheme, requires its own terminal pallete.
   Plug 'altercation/vim-colors-solarized'
 
+  " Local plugins
+   if filereadable(glob("vimrc_local_plugins"))
+       source vimrc_local_plugins
+   endif
+
   call plug#end()
 
 
