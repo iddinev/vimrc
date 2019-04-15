@@ -232,3 +232,11 @@
   nmap    <silent>    <Leader>g    :YcmCompleter GoToDeclaration<CR>
   nmap    <silent>    <Leader>i    :YcmCompleter GoToInclude<CR>
   nmap    <silent>    K            :YcmCompleter GetDoc<CR>
+
+
+  " OVERRIDES
+  "======================
+
+  if filereadable(glob("vimrc_override"))
+      source vimrc_override
+  endif
