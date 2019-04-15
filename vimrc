@@ -89,8 +89,8 @@
   Plug 'altercation/vim-colors-solarized'
 
   " Local plugins
-   if filereadable(glob("vimrc_local_plugins"))
-       source vimrc_local_plugins
+   if filereadable(glob("$HOME/.vim/vimrc_local_plugins"))
+       source $HOME/.vim/vimrc_local_plugins
    endif
 
   call plug#end()
@@ -242,6 +242,6 @@
   " OVERRIDES
   "======================
 
-  if filereadable(glob("vimrc_override"))
-      source vimrc_override
+  if filereadable(glob("$HOME/.vim/vimrc_override"))
+      source $HOME/.vim/vimrc_override
   endif
