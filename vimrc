@@ -129,7 +129,7 @@
   set shiftwidth=4
   " Trailing whitespace is intentional.
   set listchars=tab:\|\ ,trail:\ 
-  let g:show_special_chars=0
+  let g:show_special_chars=1
   set list
   set number
   set relativenumber
