@@ -215,8 +215,8 @@
 
   map                 <c-j>   <c-w>j
   map                 <c-k>   <c-w>k
-  map                 <c-l>   <c-w>l
-  map                 <c-h>   <c-w>h
+  map                 L       <c-w>l
+  map                 H       <c-w>h
   nmap    <silent>    ]l      :lne<CR>
   nmap    <silent>    [l      :lp<CR>
   nmap    <silent>    <F3>    :call ProperPaste()<CR>
@@ -230,8 +230,8 @@
   nmap    <silent>    <Up>    :ls<CR>
   nmap    <silent>    <Left>  :bp<CR>
   nmap    <silent>    <Right> :bn<CR>
-  nmap    <silent>    H       :tabprevious<CR>
-  nmap    <silent>    L       :tabnext<CR>
+  nmap    <silent>    <c-h>   :tabprevious<CR>
+  nmap    <silent>    <c-l>   :tabnext<CR>
   " YouCompleteMe (still testing)
   nmap    <silent>    <Leader>d    :YcmCompleter GoToDefinition<CR>
   nmap    <silent>    <Leader>g    :YcmCompleter GoToDeclaration<CR>
