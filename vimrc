@@ -213,8 +213,8 @@
   " REMAPS
   "======================
 
-  map                 <c-j>   <c-w>j
-  map                 <c-k>   <c-w>k
+  map                 J       <c-w>j
+  map                 K       <c-w>k
   map                 L       <c-w>l
   map                 H       <c-w>h
   nmap    <silent>    ]l      :lne<CR>
