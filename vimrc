@@ -26,8 +26,8 @@
   let g:airline_theme='dark'
 
   " Autocompletion
-  Plug 'Valloric/YouCompleteMe'
-  let g:ycm_goto_buffer_command = 'vertical-split'
+  " Plug 'Valloric/YouCompleteMe'
+  " let g:ycm_goto_buffer_command = 'vertical-split'
 
   "Better syntax highlighting
   Plug 'sheerun/vim-polyglot'
@@ -51,13 +51,7 @@
   Plug 'tpope/vim-fugitive'
 
   " Fuzzy file search.
-  Plug 'kien/ctrlp.vim'
-  let g:ctrlp_cmd = 'CtrlPMixed'
-  let g:ctrlp_working_path_mode = 'ra'
-  let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|sync)$',
-  \ 'file': '\v\.(exe|so|dll|pyc|pyo|swp|swo|out)$',
-  \ }
+  Plug 'junegunn/fzf'
 
   " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
@@ -84,9 +78,6 @@
   \       }
   \     }
   \   }
-
-  " Secondary colorscheme, requires its own terminal pallete.
-  Plug 'altercation/vim-colors-solarized'
 
   " Local plugins
    if filereadable(glob("$HOME/.vim/vimrc_local_plugins"))
@@ -196,19 +187,6 @@
      endif
   endfunction
 
-  " Solarized has an issue that prevents it from
-  " being able to be switched to-from
-  function! ToggleColorScheme()
-  " mapped to F10
-      if g:colors_name == 'PaperColor'
-          colorscheme solarized
-          syntax on
-      elseif g:colors_name  == 'solarized'
-          colorscheme PaperColor
-          syntax on
-      endif
-  endfunction
-
 
   " REMAPS
   "======================
@@ -219,6 +197,7 @@
   map                 H       <c-w>h
   nmap    <silent>    ]l      :lne<CR>
   nmap    <silent>    [l      :lp<CR>
+  " nmap    <silent>    <F1>    :call FZF()<CR>
   nmap    <silent>    <F3>    :call ProperPaste()<CR>
   nmap    <silent>    <F4>    :set hlsearch!<CR>
   nmap    <silent>    <F5>    :call ToggleSpecialChars()<CR>
