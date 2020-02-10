@@ -52,6 +52,9 @@
 
   " Fuzzy file search.
   Plug 'junegunn/fzf'
+  let g:fzf_layout = { 'right': '~40%' }
+
+  Plug 'junegunn/fzf.vim'
 
   " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
@@ -111,7 +114,7 @@
   set nopaste
   set wrap
   set textwidth=105
-  " enables cursor to always be in the center of the screen when scrolling (when possible)
+  " enables cursor to always be in the center of the screen when scrolling (when possible).
   set scrolloff=999
   set autoindent
   set smarttab
@@ -137,10 +140,23 @@
   " FUNCTIONS
   "======================
 
+
+
   function! ProperPaste()
   " mapped to F3
       :set number!
       :set paste!
+  endfunction
+
+  function! ToggleSpecialChars()
+  " mapped to F5
+      if g:show_special_chars == 0
+          set listchars=tab:\|\ ,trail:\ 
+          let g:show_special_chars = 1
+      elseif g:show_special_chars == 1
+          set listchars=tab:>-,trail:-,eol:$
+          let g:show_special_chars = 0
+     endif
   endfunction
 
   function! ToggleDiff()
@@ -176,17 +192,6 @@
       endif
   endfunction
 
-  function! ToggleSpecialChars()
-  " mapped to F5
-      if g:show_special_chars == 0
-          set listchars=tab:\|\ ,trail:\ 
-          let g:show_special_chars = 1
-      elseif g:show_special_chars == 1
-          set listchars=tab:>-,trail:-,eol:$
-          let g:show_special_chars = 0
-     endif
-  endfunction
-
 
   " REMAPS
   "======================
@@ -197,7 +202,7 @@
   map                 H       <c-w>h
   nmap    <silent>    ]l      :lne<CR>
   nmap    <silent>    [l      :lp<CR>
-  " nmap    <silent>    <F1>    :call FZF()<CR>
+  nmap    <silent>    <F1>    :Files<CR>
   nmap    <silent>    <F3>    :call ProperPaste()<CR>
   nmap    <silent>    <F4>    :set hlsearch!<CR>
   nmap    <silent>    <F5>    :call ToggleSpecialChars()<CR>
