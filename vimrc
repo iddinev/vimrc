@@ -211,9 +211,6 @@
   nmap      <silent>    <F9>          :call ToggleLight()<CR>
   nmap      <silent>    <F10>         :NERDTreeToggle<CR> <bar> :NERDTreeRefreshRoot<CR>
   nmap      <silent>    Q             <Nop>
-  nmap      <silent>    <Up>          :ls<CR>
-  nmap      <silent>    <Left>        :bp<CR>
-  nmap      <silent>    <Right>       :bn<CR>
   nmap      <silent>    <c-h>         :tabprevious<CR>
   nmap      <silent>    <c-l>         :tabnext<CR>
 
