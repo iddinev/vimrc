@@ -1,9 +1,5 @@
 " vim: set expandtab:
 
-" TODO:
-" Configure ultisnips (snippet plugin).
-" Configure YouCompleteMe (autocompletion plugin), deprecate jedi-vim (python)?
-
 
   syntax on
 
@@ -16,18 +12,14 @@
 
   " Vim statusline
   Plug 'vim-airline/vim-airline'
-  set laststatus=2
+  set laststatus=1
   let g:airline#extensions#tabline#show_buffers = 0
   let g:airline#extensions#tabline#tab_min_count = 2
   let g:airline#extensions#tabline#enabled = 1
-  let g:airline_symbols = {'maxlinenr': ''}
+  let g:airline_powerline_fonts = 1
 
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='dark'
-
-  " Autocompletion
-  " Plug 'Valloric/YouCompleteMe'
-  " let g:ycm_goto_buffer_command = 'vertical-split'
 
   "Better syntax highlighting
   Plug 'sheerun/vim-polyglot'
@@ -40,21 +32,26 @@
   Plug 'scrooloose/nerdtree'
   let NERDTreeWinPos = 'right'
   let NERDTreeWinSize = '60'
-
-  " Jedi-vim setup
-  " Plug 'davidhalter/jedi-vim'
-  " set noshowmode
-  " let g:jedi#show_call_signatures = 2
-  " let g:jedi#use_splits_not_buffers = 'right'
+  let NERDTreeChDirMode = 3
 
   " Vim git plugin
   Plug 'tpope/vim-fugitive'
 
-  " Fuzzy file search.
+  " Fuzzy search.
   Plug 'junegunn/fzf'
   let g:fzf_layout = { 'right': '~40%' }
 
   Plug 'junegunn/fzf.vim'
+  let g:fzf_preview_window = 'down:60%'
+  let g:fzf_buffers_jump = 1
+  command! -bar -bang -nargs=? -complete=buffer Buffers
+  \ call fzf#vim#buffers(<q-args>,
+  \     fzf#vim#with_preview({"options": ["-d", "\t", "--bind=f1:abort"], "placeholder": "{1}",
+  \     "window":{'width': 0.3, 'height': 0.6}}, "down:50%"), <bang>0)
+  command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>,
+  \     fzf#vim#with_preview({"options":
+  \         ['--bind=f7:abort']}, 'down:70%'), <bang>0)
 
   " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
@@ -127,7 +124,6 @@
   set list
   set number
   set relativenumber
-  set autochdir
   set splitright
   set splitbelow
   set ffs=unix
@@ -136,11 +132,13 @@
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
 
+  " Change dir to be that of the (first) open file.
+  " Plays better with my current fzf and NERDtree config than autochdir.
+  cd %:p:h
+
 
   " FUNCTIONS
   "======================
-
-
 
   function! ProperPaste()
   " mapped to F3
@@ -196,31 +194,28 @@
   " REMAPS
   "======================
 
-  map                 J       <c-w>j
-  map                 K       <c-w>k
-  map                 L       <c-w>l
-  map                 H       <c-w>h
-  nmap    <silent>    ]l      :lne<CR>
-  nmap    <silent>    [l      :lp<CR>
-  nmap    <silent>    <F1>    :Files<CR>
-  nmap    <silent>    <F3>    :call ProperPaste()<CR>
-  nmap    <silent>    <F4>    :set hlsearch!<CR>
-  nmap    <silent>    <F5>    :call ToggleSpecialChars()<CR>
-  nmap    <silent>    <F6>    :call ToggleDiff()<CR>
-  nmap    <silent>    <F7>    :NERDTreeToggle<CR>
-  nmap    <silent>    <F8>    :call ToggleWrap()<CR>
-  nmap    <silent>    <F9>    :call ToggleLight()<CR>
-  nmap    <silent>    Q       <Nop>
-  nmap    <silent>    <Up>    :ls<CR>
-  nmap    <silent>    <Left>  :bp<CR>
-  nmap    <silent>    <Right> :bn<CR>
-  nmap    <silent>    <c-h>   :tabprevious<CR>
-  nmap    <silent>    <c-l>   :tabnext<CR>
-  " YouCompleteMe (still testing)
-  nmap    <silent>    <Leader>d    :YcmCompleter GoToDefinition<CR>
-  nmap    <silent>    <Leader>g    :YcmCompleter GoToDeclaration<CR>
-  nmap    <silent>    <Leader>i    :YcmCompleter GoToInclude<CR>
-  nmap    <silent>    K            :YcmCompleter GetDoc<CR>
+  map                   J             <c-w>j
+  map                   K             <c-w>k
+  map                   L             <c-w>l
+  map                   H             <c-w>h
+
+  nmap      <silent>    ]l            :lne<CR>
+  nmap      <silent>    [l            :lp<CR>
+  nmap      <silent>    <F1>          :Buffers <CR>
+  nmap      <silent>    <F3>          :call ProperPaste()<CR>
+  nmap      <silent>    <F4>          :set hlsearch!<CR>
+  nmap      <silent>    <F5>          :call ToggleSpecialChars()<CR>
+  nmap      <silent>    <F6>          :call ToggleDiff()<CR>
+  nmap      <silent>    <F7>          :Files<CR>
+  nmap      <silent>    <F8>          :call ToggleWrap()<CR>
+  nmap      <silent>    <F9>          :call ToggleLight()<CR>
+  nmap      <silent>    <F10>         :NERDTreeToggle<CR> <bar> :NERDTreeRefreshRoot<CR>
+  nmap      <silent>    Q             <Nop>
+  nmap      <silent>    <Up>          :ls<CR>
+  nmap      <silent>    <Left>        :bp<CR>
+  nmap      <silent>    <Right>       :bn<CR>
+  nmap      <silent>    <c-h>         :tabprevious<CR>
+  nmap      <silent>    <c-l>         :tabnext<CR>
 
 
   " OVERRIDES
