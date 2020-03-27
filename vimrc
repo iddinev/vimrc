@@ -42,16 +42,27 @@
   let g:fzf_layout = { 'right': '~40%' }
 
   Plug 'junegunn/fzf.vim'
+  let g:fzf_command_prefix = 'FZF'
   let g:fzf_preview_window = 'down:60%'
   let g:fzf_buffers_jump = 1
-  command! -bar -bang -nargs=? -complete=buffer Buffers
+  command! -bar -bang -nargs=? -complete=buffer FZFBuffers
   \ call fzf#vim#buffers(<q-args>,
-  \     fzf#vim#with_preview({"options": ["-d", "\t", "--bind=f1:abort"], "placeholder": "{1}",
-  \     "window":{'width': 0.3, 'height': 0.6}}, "down:50%"), <bang>0)
-  command! -bang -nargs=? -complete=dir Files
+  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%", "--bind=f1:abort"],
+  \     "placeholder": "{1}", "window":{'width': 0.3, 'height': 0.6}}, "down:50%"), <bang>0)
+  command! -bang -nargs=? -complete=dir FZFFiles
   \ call fzf#vim#files(<q-args>,
   \     fzf#vim#with_preview({"options":
   \         ['--bind=f7:abort']}, 'down:70%'), <bang>0)
+  command! -bang -nargs=* FZFRg
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case "
+  \     .shellescape(<q-args>), 1,
+  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%", "--bind=ctrl-f:abort"],
+  \     "placeholder": "{1}"}, 'down:50%'), <bang>0)
+  command! -bang -nargs=* FZFRgAll
+  \ call fzf#vim#grep("rg --column --no-ignore --line-number --no-heading --color=always --smart-case "
+  \     .shellescape(<q-args>), 1,
+  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%"],
+  \     "placeholder": "{1}"}, 'down:50%'), <bang>0)
 
   " Main colorscheme
   " This theme forces colours (if the term emulator allows it)
@@ -199,14 +210,17 @@
   map                   L             <c-w>l
   map                   H             <c-w>h
 
+  " All the FZF commands are modified in the plugins part above.
   nmap      <silent>    ]l            :lne<CR>
   nmap      <silent>    [l            :lp<CR>
-  nmap      <silent>    <F1>          :Buffers <CR>
+  nmap      <silent>    <c-l>         :FZFLines<CR>
+  nmap      <silent>    <c-f>         :FZFRg<CR>
+  nmap      <silent>    <F1>          :FZFBuffers <CR>
   nmap      <silent>    <F3>          :call ProperPaste()<CR>
   nmap      <silent>    <F4>          :set hlsearch!<CR>
   nmap      <silent>    <F5>          :call ToggleSpecialChars()<CR>
   nmap      <silent>    <F6>          :call ToggleDiff()<CR>
-  nmap      <silent>    <F7>          :Files<CR>
+  nmap      <silent>    <F7>          :FZFFiles<CR>
   nmap      <silent>    <F8>          :call ToggleWrap()<CR>
   nmap      <silent>    <F9>          :call ToggleLight()<CR>
   nmap      <silent>    <F10>         :NERDTreeToggle<CR> <bar> :NERDTreeRefreshRoot<CR>
