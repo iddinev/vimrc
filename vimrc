@@ -3,6 +3,7 @@
 
   syntax on
 
+
   " PACKAGES (PLUG)
   "======================
 
@@ -32,6 +33,11 @@
   let NERDTreeWinPos = 'right'
   let NERDTreeWinSize = '60'
   let NERDTreeChDirMode = 3
+  " Mirror FZF's hotkeys.
+  let NERDTreeMapOpenInTab = '<c-t>'
+  let NERDTreeMapOpenSplit = '<c-x>'
+  let NERDTreeMapOpenVSplit = '<c-v>'
+  let NERDTreeHighlightCursorline = 0
 
   " git plugin
   Plug 'tpope/vim-fugitive'
@@ -47,23 +53,22 @@
 
   command! -bar -bang -nargs=? -complete=buffer FZFBuffers
   \ call fzf#vim#buffers(<q-args>,
-  \     fzf#vim#with_preview({"options": ["--bind=f1:abort"],
-  \     "window": {'width': 0.3, 'height': 0.6}}, "down:50%"), <bang>0)
+  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%", "--bind=f1:abort"],
+  \     "placeholder": "{1}", "window":{'width': 0.3, 'height': 0.6}}, "down:50%"), <bang>0)
   command! -bang -nargs=? -complete=dir FZFFiles
   \ call fzf#vim#files(<q-args>,
   \     fzf#vim#with_preview({"options":
-  \     ['--bind=f3:abort', '--height=100%']}, 'down:70%'), <bang>0)
+  \         ['--bind=f7:abort']}, 'down:70%'), <bang>0)
   command! -bang -nargs=* FZFRg
   \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case "
   \     .shellescape(<q-args>), 1,
-  \     fzf#vim#with_preview({"options":
-  \     ["--bind=ctrl-f:abort", '--height=100%']}, 'down:50%'), <bang>0)
+  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%", "--bind=ctrl-f:abort"],
+  \     "placeholder": "{1}"}, 'down:50%'), <bang>0)
   command! -bang -nargs=* FZFRgAll
-  \ call fzf#vim#grep(
-  \     "rg --column --no-ignore --line-number --no-heading --color=always --smart-case "
+  \ call fzf#vim#grep("rg --column --no-ignore --line-number --no-heading --color=always --smart-case "
   \     .shellescape(<q-args>), 1,
-  \     fzf#vim#with_preview({"options":
-  \     ["--bind=ctrl-g:abort", '--height=100%']}, 'down:50%'), <bang>0)
+  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%"],
+  \     "placeholder": "{1}"}, 'down:50%'), <bang>0)
 
   " Main colorscheme
   Plug 'NLKNguyen/papercolor-theme'
@@ -153,23 +158,13 @@
   "======================
 
   function! ProperPaste()
-  " mapped to F5
+  " mapped to F3
       :set number!
       :set paste!
   endfunction
 
-  function! ToggleDiff()
-  " mapped to F7
-      let l:save_cursor = getpos(".")
-      if &diff
-          diffoff!
-      else
-          windo diffthis
-      endif
-  endfunction
-
   function! ToggleSpecialChars()
-  " mapped to F8
+  " mapped to F5
       if g:show_special_chars == 0
           set listchars=tab:\|\ ,trail:\ 
           let g:show_special_chars = 1
@@ -179,17 +174,28 @@
      endif
   endfunction
 
-  function! ToggleWrap()
-  " mapped to F10
-      set wrap!
-      echo "wrap is set to:" &wrap
+  function! ToggleDiff()
+  " mapped to F6
+      let l:save_cursor = getpos(".")
+      if &diff
+          diffoff!
+      else
+          windo diffthis
+      endif
   endfunction
 
   function! TrimWhiteSpace()
       %s/\s\+$//e
   endfunction
 
+  function! ToggleWrap()
+  " mapped to F8
+      set wrap!
+      echo "wrap is set to:" &wrap
+  endfunction
+
   function! ToggleLight()
+  " mapped to F9
       if &background == 'dark'
           let g:airline_theme='papercolor'
           set background=light
@@ -213,17 +219,17 @@
   " All the FZF commands are modified in the plugins part above.
   nmap      <silent>    ]l            :lne<CR>
   nmap      <silent>    [l            :lp<CR>
-  nmap      <silent>    <c-l>         :FZFLines<CR>
   nmap      <silent>    <c-f>         :FZFRg<CR>
   nmap      <silent>    <c-g>         :FZFRgAll<CR>
   nmap      <silent>    <F1>          :FZFBuffers <CR>
-  nmap      <silent>    <F3>          :FZFFiles<CR>
-  nmap      <silent>    <F4>          :NERDTreeToggle<CR> <bar> :NERDTreeRefreshRoot<CR>
-  nmap      <silent>    <F5>          :call ProperPaste()<CR>
-  nmap      <silent>    <F6>          :set hlsearch!<CR>
-  nmap      <silent>    <F7>          :call ToggleDiff()<CR>
-  nmap      <silent>    <F8>          :call ToggleSpecialChars()<CR>
-  nmap      <silent>    <F10>         :call ToggleWrap()<CR>
+  nmap      <silent>    <F3>          :call ProperPaste()<CR>
+  nmap      <silent>    <F4>          :set hlsearch!<CR>
+  nmap      <silent>    <F5>          :call ToggleSpecialChars()<CR>
+  nmap      <silent>    <F6>          :call ToggleDiff()<CR>
+  nmap      <silent>    <F7>          :FZFFiles<CR>
+  nmap      <silent>    <F8>          :call ToggleWrap()<CR>
+  nmap      <silent>    <F9>          :call ToggleLight()<CR>
+  nmap      <silent>    <F10>         :NERDTreeToggle<CR> <bar> :NERDTreeRefreshRoot<CR>
   nmap      <silent>    Q             <Nop>
   nmap      <silent>    <c-h>         :tabprevious<CR>
   nmap      <silent>    <c-l>         :tabnext<CR>
