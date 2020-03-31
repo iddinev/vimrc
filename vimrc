@@ -53,22 +53,24 @@
 
   command! -bar -bang -nargs=? -complete=buffer FZFBuffers
   \ call fzf#vim#buffers(<q-args>,
-  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%", "--bind=f1:abort"],
-  \     "placeholder": "{1}", "window":{'width': 0.3, 'height': 0.6}}, "down:50%"), <bang>0)
+  \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=f1:abort'],
+  \         'window':{'width': 0.3, 'height': 0.6}}, 'down:50%'), <bang>0)
   command! -bang -nargs=? -complete=dir FZFFiles
   \ call fzf#vim#files(<q-args>,
-  \     fzf#vim#with_preview({"options":
-  \         ['--bind=f7:abort']}, 'down:70%'), <bang>0)
+  \     fzf#vim#with_preview({'options':
+  \         ['--height=100%', '--bind=f7:abort']}, 'down:70%'), <bang>0)
   command! -bang -nargs=* FZFRg
-  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case "
+  \ call fzf#vim#grep(
+  \     'rg --column --line-number --no-heading --color=always --smart-case '
   \     .shellescape(<q-args>), 1,
-  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%", "--bind=ctrl-f:abort"],
-  \     "placeholder": "{1}"}, 'down:50%'), <bang>0)
+  \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=ctrl-f:abort']},
+  \         'down:50%'), <bang>0)
   command! -bang -nargs=* FZFRgAll
-  \ call fzf#vim#grep("rg --column --no-ignore --line-number --no-heading --color=always --smart-case "
+  \ call fzf#vim#grep(
+  \     'rg --column --no-ignore --line-number --no-heading --color=always --smart-case '
   \     .shellescape(<q-args>), 1,
-  \     fzf#vim#with_preview({"options": ["-d", "\t", "--height=100%"],
-  \     "placeholder": "{1}"}, 'down:50%'), <bang>0)
+  \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=ctrl-g:abort']},
+  \         'down:50%'), <bang>0)
 
   " Main colorscheme
   Plug 'NLKNguyen/papercolor-theme'
