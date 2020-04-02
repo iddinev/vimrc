@@ -1,4 +1,4 @@
-" vim: set expandtab:
+ " vim: set expandtab:
 
 
   syntax on
@@ -73,30 +73,7 @@
   \         'down:50%'), <bang>0)
 
   " Main colorscheme
-  Plug 'NLKNguyen/papercolor-theme'
-  " This theme forces colours (if the term emulator allows it)
-  " so it is independant of the terminal pallette .
-  " The terminal pallete can still be used through the override functionality.
-  " Force set the background to use the terminal one.
-  let g:PaperColor_Theme_Options = {
-  \     'theme': {
-  \       'default.dark': {
-  \         'transparent_background' : 1,
-  \         'allow_bold' : 1
-  \       }
-  \     },
-  \     'language': {
-  \       'python': {
-  \         'highlight_builtins' : 1
-  \       },
-  \       'cpp': {
-  \         'highlight_standard_library': 1
-  \       },
-  \       'c': {
-  \         'highlight_builtins' : 1
-  \       }
-  \     }
-  \   }
+  Plug 'altercation/vim-colors-solarized'
 
   " Local plugins
    if filereadable(glob("$HOME/.vim/vimrc_local_plugins"))
@@ -114,9 +91,9 @@
   set modeline
 
   set background=dark
-  colorscheme PaperColor
-  " Do not highlight the relative line number.
-  highlight! link CursorLineNr LineNr
+  colorscheme solarized
+  " Do not highlight the relative line number and/or column.
+  highlight! link LineNr Comment
 
   set mouse=a
   set omnifunc=syntaxcomplete#Complete
@@ -139,7 +116,6 @@
   set shiftwidth=4
   " Trailing whitespace is intentional.
   set listchars=tab:\|\ ,trail:\ 
-  let g:show_special_chars=1
   set list
   set number
   set relativenumber
@@ -154,6 +130,11 @@
   " Change dir to be that of the (first) open file.
   " Plays better with my current fzf and NERDtree config than autochdir.
   cd %:p:h
+
+
+  " Variables
+  "======================
+  let g:show_special_chars=1
 
 
   " FUNCTIONS
