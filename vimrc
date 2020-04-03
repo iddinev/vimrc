@@ -83,6 +83,10 @@
   \       'default.dark': {
   \         'transparent_background' : 1,
   \         'allow_bold' : 1
+  \       },
+  \       'default.light': {
+  \         'transparent_background' : 1,
+  \         'allow_bold' : 1
   \       }
   \     },
   \     'language': {
