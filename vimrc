@@ -41,6 +41,8 @@
 
   " git plugin
   Plug 'tpope/vim-fugitive'
+  command! -bar -nargs=? -complete=file Gadd :Gwrite
+  command! -bar -nargs=? -complete=file Gcheckout :Gread
 
   " Fuzzy search.
   Plug 'junegunn/fzf'
