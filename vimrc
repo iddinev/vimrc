@@ -52,6 +52,7 @@
   let g:fzf_command_prefix = 'FZF'
   let g:fzf_preview_window = 'down:60%'
   let g:fzf_buffers_jump = 1
+  let g:fzf_commits_log_options = '--graph --all --color=always --format="%C(auto)%h%d %s %C(green)%cr"'
 
   command! -bar -bang -nargs=? -complete=buffer FZFBuffers
   \ call fzf#vim#buffers(<q-args>,
@@ -73,6 +74,16 @@
   \     .shellescape(<q-args>), 1,
   \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=ctrl-g:abort']},
   \         'down:50%'), <bang>0)
+  command! -bar -bang FZFCommits
+  \ call fzf#vim#commits({'options':
+  \ ['--preview',
+  \ 'echo {} | grep -o "[a-f0-9]\{7,\}" | head -1 | xargs git show --stat --format=fuller --color=always',
+  \ '--preview-window=down:50%']}, <bang>0)
+  command! -bar -bang FZFBCommits
+  \ call fzf#vim#buffer_commits({'options':
+  \ ['--preview',
+  \ 'echo {} | grep -o "[a-f0-9]\{7,\}" | head -1 | xargs git show --stat --format=fuller --color=always',
+  \ '--preview-window=down:50%']}, <bang>0)
 
   " Main colorscheme
   Plug 'NLKNguyen/papercolor-theme'
