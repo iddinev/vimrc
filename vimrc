@@ -234,10 +234,11 @@
   map                   K             <c-w>k
   map                   L             <c-w>l
   map                   H             <c-w>h
-
   " All the FZF commands are modified in the plugins part above.
-  nmap      <silent>    ]l            :lne<CR>
-  nmap      <silent>    [l            :lp<CR>
+  nmap      <silent>    [q            :cprevious<CR>
+  nmap      <silent>    ]q            :cnext<CR>
+  nmap      <silent>    [l            :lprevious <CR>
+  nmap      <silent>    ]l            :lnext<CR>
   nmap      <silent>    <c-f>         :FZFRg<CR>
   nmap      <silent>    <c-g>         :FZFRgAll<CR>
   nmap      <silent>    <F1>          :FZFBuffers <CR>
