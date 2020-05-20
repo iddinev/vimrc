@@ -1,0 +1,5 @@
+pkg	vimrc	/" PACKAGES
+general	vimrc	/" GENERAL
+function	vimrc	/" FUNCTIONS
+remap	vimrc	/" REMAPS
+override	vimrc	/" OVERRIDES
