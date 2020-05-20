@@ -164,6 +164,7 @@
   set splitbelow
   set ffs=unix
   set diffopt+=vertical
+  set wildmenu
 
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
