@@ -10,25 +10,26 @@
   " install curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   call plug#begin('~/.vim/plugged')
 
-  " Vim statusline
+  " Statusline
   Plug 'vim-airline/vim-airline'
   set laststatus=1
   let g:airline#extensions#tabline#show_buffers = 0
   let g:airline#extensions#tabline#tab_min_count = 2
   let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#ale#enabled = 1
   let g:airline_powerline_fonts = 1
 
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='dark'
 
-  "Better syntax highlighting
+  " Syntax highlighting
   Plug 'sheerun/vim-polyglot'
 
-  " Nerdcomenter setup
+  " Commenter
   Plug 'scrooloose/nerdcommenter'
   let NERDSpaceDelims = 1
 
-  " Nerdtree setup
+  " Directory tree viewer
   Plug 'scrooloose/nerdtree'
   let NERDTreeWinPos = 'right'
   let NERDTreeWinSize = '60'
@@ -39,7 +40,14 @@
   let NERDTreeMapOpenVSplit = '<c-v>'
   let NERDTreeHighlightCursorline = 0
 
-  " git plugin
+  " Linter/syntax check engine
+  Plug 'dense-analysis/ale'
+
+  " Vim linter
+  " Requires 'vint' cli.
+  Plug 'Vimjas/vint'
+
+  " GIT plugin
   Plug 'tpope/vim-fugitive'
   command! -bar -nargs=? -complete=file Gadd :Gwrite
   command! -bar -nargs=? -complete=file Gcheckout :Gread
@@ -116,7 +124,7 @@
   \   }
 
   " Local plugins
-   if filereadable(glob("$HOME/.vim/vimrc_local_plugins"))
+   if filereadable(glob('$HOME/.vim/vimrc_local_plugins'))
        source $HOME/.vim/vimrc_local_plugins
    endif
 
@@ -162,9 +170,10 @@
   set relativenumber
   set splitright
   set splitbelow
-  set ffs=unix
+  set fileformats=unix
   set diffopt+=vertical
   set wildmenu
+  set signcolumn=number
 
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
@@ -196,7 +205,7 @@
 
   function! ToggleDiff()
   " mapped to F6
-      let l:save_cursor = getpos(".")
+      let l:save_cursor = getpos('.')
       if &diff
           diffoff!
       else
@@ -205,22 +214,25 @@
   endfunction
 
   function! TrimWhiteSpace()
-      %s/\s\+$//e
+       let l:save = winsaveview()
+       " vint: next-line -ProhibitCommandWithUnintendedSideEffect -ProhibitCommandRelyOnUser
+       keeppatterns %s/\s\+$//e
+       call winrestview(l:save)
   endfunction
 
   function! ToggleWrap()
   " mapped to F8
       set wrap!
-      echo "wrap is set to:" &wrap
+      echo 'wrap is set to:' &wrap
   endfunction
 
   function! ToggleLight()
   " mapped to F9
-      if &background == 'dark'
+      if &background ==# 'dark'
           let g:airline_theme='papercolor'
           set background=light
           highlight! link CursorLineNr LineNr
-      elseif &background == 'light'
+      elseif &background ==# 'light'
           let g:airline_theme='dark'
           set background=dark
           highlight! link CursorLineNr LineNr
@@ -259,6 +271,6 @@
   " OVERRIDES
   "======================
 
-  if filereadable(glob("$HOME/.vim/vimrc_override"))
+  if filereadable(glob('$HOME/.vim/vimrc_override'))
       source $HOME/.vim/vimrc_override
   endif
