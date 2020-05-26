@@ -42,9 +42,10 @@
 
   " Linter/syntax check engine
   Plug 'dense-analysis/ale'
+  " Shell linter requires 'shellcheck' cli tool.
 
   " Vim linter
-  " Requires 'vint' cli.
+  " Used as a styler, requires 'vint' cli tool.
   Plug 'Vimjas/vint'
 
   " GIT plugin
