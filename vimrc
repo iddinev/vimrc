@@ -153,6 +153,8 @@
   " Misc
   Plug 'junegunn/vim-peekaboo'
 
+  Plug 'tpope/vim-dispatch'
+
   " Local plugins
    if filereadable(glob('$HOME/.vim/vimrc_local_plugins'))
        source $HOME/.vim/vimrc_local_plugins
