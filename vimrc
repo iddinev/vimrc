@@ -44,7 +44,7 @@
   let NERDTreeMapOpenVSplit = '<c-v>'
   let NERDTreeHighlightCursorline = 0
 
-  " Completion engine
+  " Completion
   " Requires 'pynvim', 'msgpack'.
   Plug 'Shougo/deoplete.nvim'
   let g:deoplete#enable_at_startup = 1
@@ -57,7 +57,7 @@
 
   Plug 'Shougo/neco-vim'
 
-  " LSP/linter/syntax check engine
+  " LSP/linter/syntax check
   Plug 'dense-analysis/ale'
   " Shell linter requires 'shellcheck'.
   " Bash LSP requires 'bash-language-server'.
@@ -69,13 +69,12 @@
   " Used as a styler, requires 'vint'.
   Plug 'Vimjas/vint'
 
-  " Snippets engine
+  " Snippets
   Plug 'SirVer/ultisnips'
 
-  " Snippets templates
   Plug 'honza/vim-snippets'
 
-  " GIT plugin
+  " GIT
   Plug 'tpope/vim-fugitive'
   command! -bar -nargs=? -complete=file Gadd :Gwrite
   command! -bar -nargs=? -complete=file Gcheckout :Gread
@@ -151,12 +150,21 @@
   \     }
   \   }
 
+  " Misc
+  Plug 'junegunn/vim-peekaboo'
+
   " Local plugins
    if filereadable(glob('$HOME/.vim/vimrc_local_plugins'))
        source $HOME/.vim/vimrc_local_plugins
    endif
 
   call plug#end()
+
+  " Completion engine
+  " call deoplete#custom#source('ale', 'rank', 50)
+  " call deoplete#custom#option('sources', {
+  " \ '_': ['ale', 'around', 'buffer', 'file', 'member'],
+  " \})
 
 
   " GENERAL
@@ -172,6 +180,7 @@
   highlight! link CursorLineNr LineNr
 
   set mouse=a
+  " set omnifunc=syntaxcomplete#Complete
   set backspace=2
   set nohlsearch
   set ignorecase
