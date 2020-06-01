@@ -1,13 +1,17 @@
 " vim: set expandtab:
 
-
   syntax on
 
 
   " PACKAGES (PLUG)
   "======================
 
-  " install curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  " Auto(ish) install.
+  if empty(glob('~/.vim/autoload/plug.vim'))
+      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  endif
+
   call plug#begin('~/.vim/plugged')
 
   " Statusline
@@ -40,13 +44,36 @@
   let NERDTreeMapOpenVSplit = '<c-v>'
   let NERDTreeHighlightCursorline = 0
 
-  " Linter/syntax check engine
+  " Completion engine
+  " Requires 'pynvim', 'msgpack'.
+  Plug 'Shougo/deoplete.nvim'
+  let g:deoplete#enable_at_startup = 1
+
+  Plug 'roxma/nvim-yarp'
+
+  Plug 'roxma/vim-hug-neovim-rpc'
+
+  Plug 'Shougo/neco-syntax'
+
+  Plug 'Shougo/neco-vim'
+
+  " LSP/linter/syntax check engine
   Plug 'dense-analysis/ale'
-  " Shell linter requires 'shellcheck' cli tool.
+  " Shell linter requires 'shellcheck'.
+  " Bash LSP requires 'bash-language-server'.
+  let g:ale_linters = {
+  \   'sh': ['shellcheck', 'shell'],
+  \}
 
   " Vim linter
-  " Used as a styler, requires 'vint' cli tool.
+  " Used as a styler, requires 'vint'.
   Plug 'Vimjas/vint'
+
+  " Snippets engine
+  Plug 'SirVer/ultisnips'
+
+  " Snippets templates
+  Plug 'honza/vim-snippets'
 
   " GIT plugin
   Plug 'tpope/vim-fugitive'
@@ -135,8 +162,8 @@
   " GENERAL
   "======================
 
-  set encoding=utf-8
   syntax on
+  set encoding=utf-8
   set modeline
 
   set background=dark
@@ -145,7 +172,6 @@
   highlight! link CursorLineNr LineNr
 
   set mouse=a
-  set omnifunc=syntaxcomplete#Complete
   set backspace=2
   set nohlsearch
   set ignorecase
@@ -175,6 +201,7 @@
   set diffopt+=vertical
   set wildmenu
   set signcolumn=number
+  set noshowmode
 
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
@@ -206,12 +233,13 @@
 
   function! ToggleDiff()
   " mapped to F6
-      let l:save_cursor = getpos('.')
+      let l:save_cursor = getcurpos()
       if &diff
           diffoff!
       else
           windo diffthis
       endif
+      call setpos('.',save_cursor)
   endfunction
 
   function! TrimWhiteSpace()
