@@ -59,6 +59,7 @@
 
   " LSP/linter/syntax check
   Plug 'dense-analysis/ale'
+  let g:ale_cursor_detail = 1
   " Shell linter requires 'shellcheck'.
   " Bash LSP requires 'bash-language-server'.
   " let g:ale_linters = {
@@ -71,6 +72,9 @@
 
   " Snippets
   Plug 'SirVer/ultisnips'
+  let g:UltiSnipsExpandTrigger='<c-s>'
+  let g:UltiSnipsJumpForwardTrigger='<c-f>'
+  let g:UltiSnipsJumpBackwardTrigger='<c-b>'
 
   Plug 'honza/vim-snippets'
 
@@ -164,6 +168,8 @@
 
   call plug#end()
 
+  call deoplete#custom#option('ignore_sources', {'_': ['around']})
+
 
   " GENERAL
   "======================
@@ -208,6 +214,7 @@
   set wildmenu
   set signcolumn=number
   set noshowmode
+  set completeopt=menu,popup
 
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
@@ -283,11 +290,12 @@
   map                   L             <c-w>l
   map                   H             <c-w>h
   " All the FZF commands are modified in the plugins part above.
+  nmap      <silent>    <Leader>d     :ALEGoToDefinition<CR>
+  nmap      <silent>    <Leader>r     :ALEFindReferences<CR>
   nmap      <silent>    [q            :cprevious<CR>
   nmap      <silent>    ]q            :cnext<CR>
   nmap      <silent>    [l            :lprevious <CR>
   nmap      <silent>    ]l            :lnext<CR>
-  nmap      <silent>    <c-m>         :messages<CR>
   nmap      <silent>    <c-f>         :FZFRg<CR>
   nmap      <silent>    <c-g>         :FZFRgAll<CR>
   nmap      <silent>    <F1>          :FZFBuffers <CR>
