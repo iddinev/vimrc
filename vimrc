@@ -61,9 +61,9 @@
   Plug 'dense-analysis/ale'
   " Shell linter requires 'shellcheck'.
   " Bash LSP requires 'bash-language-server'.
-  let g:ale_linters = {
-  \   'sh': ['shellcheck', 'shell'],
-  \}
+  " let g:ale_linters = {
+  " \   'sh': ['shellcheck', 'shell'],
+  " \}
 
   " Vim linter
   " Used as a styler, requires 'vint'.
@@ -155,18 +155,14 @@
 
   Plug 'tpope/vim-dispatch'
 
+  Plug 'drmingdrmer/vim-toggle-quickfix'
+
   " Local plugins
    if filereadable(glob('$HOME/.vim/vimrc_local_plugins'))
        source $HOME/.vim/vimrc_local_plugins
    endif
 
   call plug#end()
-
-  " Completion engine
-  " call deoplete#custom#source('ale', 'rank', 50)
-  " call deoplete#custom#option('sources', {
-  " \ '_': ['ale', 'around', 'buffer', 'file', 'member'],
-  " \})
 
 
   " GENERAL
@@ -182,7 +178,6 @@
   highlight! link CursorLineNr LineNr
 
   set mouse=a
-  " set omnifunc=syntaxcomplete#Complete
   set backspace=2
   set nohlsearch
   set ignorecase
@@ -292,6 +287,7 @@
   nmap      <silent>    ]q            :cnext<CR>
   nmap      <silent>    [l            :lprevious <CR>
   nmap      <silent>    ]l            :lnext<CR>
+  nmap      <silent>    <c-m>         :messages<CR>
   nmap      <silent>    <c-f>         :FZFRg<CR>
   nmap      <silent>    <c-g>         :FZFRgAll<CR>
   nmap      <silent>    <F1>          :FZFBuffers <CR>
@@ -306,6 +302,7 @@
   nmap      <silent>    Q             <Nop>
   nmap      <silent>    <c-h>         :tabprevious<CR>
   nmap      <silent>    <c-l>         :tabnext<CR>
+  nmap      <silent>    <c-q>         <Plug>window:quickfix:loop
 
 
   " OVERRIDES
