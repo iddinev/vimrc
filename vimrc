@@ -76,6 +76,7 @@
   \ 'do': 'bash install.sh',
   \ }
   let g:LanguageClient_diagnosticsEnable = 1
+  let g:LanguageClient_selectionUI = 'fzf'
   let g:LanguageClient_serverCommands = {
   \ 'sh': ['bash-language-server', 'start'],
   \ 'vim': ['vim-language-server', '--stdio'],
@@ -97,6 +98,7 @@
   Plug 'tpope/vim-fugitive'
 
   Plug 'junegunn/gv.vim'
+  command! -bang -nargs=* -range=0 GVA :GV --all
 
   " Fuzzy search.
   Plug 'junegunn/fzf'
