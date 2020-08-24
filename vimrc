@@ -60,6 +60,8 @@
   Plug 'Shougo/neco-syntax'
 
   " Linter
+  " Some language servers are not yet up to speed with the diagnostics,
+  " hence the additional stylers/linters/diagnostics tools.
 
   Plug 'dense-analysis/ale'
   " Shell linter requires 'shellcheck'.
@@ -75,7 +77,6 @@
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
   \ }
-  let g:LanguageClient_diagnosticsEnable = 1
   let g:LanguageClient_selectionUI = 'fzf'
   let g:LanguageClient_serverCommands = {
   \ 'sh': ['bash-language-server', 'start'],
@@ -192,6 +193,8 @@
   Plug 'tpope/vim-dispatch'
 
   Plug 'drmingdrmer/vim-toggle-quickfix'
+
+  Plug 'Asheq/close-buffers.vim'
 
   Plug 'Shougo/echodoc.vim'
   let g:echodoc#enable_at_startup = 1
@@ -316,55 +319,67 @@
   function! ToggleLight()
   " mapped to F9
     if &background ==# 'dark'
-        let g:airline_theme='papercolor'
-        set background=light
-        highlight! link CursorLineNr LineNr
-      elseif &background ==# 'light'
-        let g:airline_theme='dark'
-        set background=dark
-        highlight! link CursorLineNr LineNr
-      endif
-    endfunction
+      let g:airline_theme='papercolor'
+      set background=light
+      highlight! link CursorLineNr LineNr
+    elseif &background ==# 'light'
+      let g:airline_theme='dark'
+      set background=dark
+      highlight! link CursorLineNr LineNr
+    endif
+  endfunction
 
 
-    " REMAPS
-    "======================
-
-    map                   J             <c-w>j
-    map                   K             <c-w>k
-    map                   L             <c-w>l
-    map                   H             <c-w>h
-    " All the FZF commands are modified in the plugins part above.
-    nmap      <silent>    <Leader>d     :call LanguageClient#textDocument_definition()<CR>
-    nmap      <silent>    <Leader>r     :call LanguageClient#textDocument_rename()<CR>
-    nmap      <silent>    <Leader>h     :call LanguageClient#textDocument_hover()<CR>
-    nmap      <silent>    <Leader>x     :call LanguageClient#textDocument_references()<CR>
-    nmap      <silent>    <Leader>m     :call LanguageClient_contextMenu()<CR>
-    nmap      <silent>    [q            :cprevious<CR>
-    nmap      <silent>    ]q            :cnext<CR>
-    nmap      <silent>    [l            :lprevious <CR>
-    nmap      <silent>    ]l            :lnext<CR>
-    nmap      <silent>    <c-f>         :FZFRg<CR>
-    nmap      <silent>    <c-g>         :FZFRgAll<CR>
-    nmap      <silent>    <c-r>         :FZFHistory:<CR>
-    nmap      <silent>    <F1>          :FZFBuffers <CR>
-    nmap      <silent>    <F3>          :call ProperPaste()<CR>
-    nmap      <silent>    <F4>          :set hlsearch!<CR>
-    nmap      <silent>    <F5>          :call ToggleSpecialChars()<CR>
-    nmap      <silent>    <F6>          :call ToggleDiff()<CR>
-    nmap      <silent>    <F7>          :FZFFiles<CR>
-    nmap      <silent>    <F8>          :call ToggleWrap()<CR>
-    nmap      <silent>    <F9>          :call ToggleLight()<CR>
-    nmap      <silent>    <F10>         :NERDTreeToggle<CR> <bar> :NERDTreeRefreshRoot<CR>
-    nmap      <silent>    Q             <Nop>
-    nmap      <silent>    <c-h>         :tabprevious<CR>
-    nmap      <silent>    <c-l>         :tabnext<CR>
-    nmap      <silent>    <c-q>         <Plug>window:quickfix:loop
+  " AUTOCMD
+  "======================
+  augroup bash
+    autocmd!
+    " The bash language server is still having problems with some syntax.
+    autocmd FileType sh let g:LanguageClient_diagnosticsEnable = 0
+  augroup END
 
 
-    " OVERRIDES
-    "======================
 
-    if filereadable(glob('$HOME/.vim/vimrc_override'))
+  " REMAPS
+  "======================
+
+  map                   J             <c-w>j
+  map                   K             <c-w>k
+  map                   L             <c-w>l
+  map                   H             <c-w>h
+  " All the FZF commands are modified in the plugins part above.
+  nmap      <silent>    <Leader>d     <Plug>(lcn-definition)
+  nmap      <silent>    <Leader>r     <Plug>(lcn-rename)
+  nmap      <silent>    <Leader>h     <Plug>(lcn-hover)
+  nmap      <silent>    <Leader>x     <Plug>(lcn-references)
+  nmap      <silent>    <Leader>s     <Plug>(lcn-symbols)
+  nmap      <silent>    <Leader>l     <Plug>(lcn-highlight)
+  nmap      <silent>    <Leader>m     <Plug>(lcn-menu)
+  nmap      <silent>    [q            :cprevious<CR>
+  nmap      <silent>    ]q            :cnext<CR>
+  nmap      <silent>    [l            :lprevious <CR>
+  nmap      <silent>    ]l            :lnext<CR>
+  nmap      <silent>    <c-f>         :FZFRg<CR>
+  nmap      <silent>    <c-g>         :FZFRgAll<CR>
+  nmap      <silent>    <c-r>         :FZFHistory:<CR>
+  nmap      <silent>    <F1>          :FZFBuffers <CR>
+  nmap      <silent>    <F3>          :call ProperPaste()<CR>
+  nmap      <silent>    <F4>          :set hlsearch!<CR>
+  nmap      <silent>    <F5>          :call ToggleSpecialChars()<CR>
+  nmap      <silent>    <F6>          :call ToggleDiff()<CR>
+  nmap      <silent>    <F7>          :FZFFiles<CR>
+  nmap      <silent>    <F8>          :call ToggleWrap()<CR>
+  nmap      <silent>    <F9>          :call ToggleLight()<CR>
+  nmap      <silent>    <F10>         :NERDTreeToggle<CR> <bar> :NERDTreeRefreshRoot<CR>
+  nmap      <silent>    Q             <Nop>
+  nmap      <silent>    <c-h>         :tabprevious<CR>
+  nmap      <silent>    <c-l>         :tabnext<CR>
+  nmap      <silent>    <c-q>         <Plug>window:quickfix:loop
+
+
+  " OVERRIDES
+  "======================
+
+  if filereadable(glob('$HOME/.vim/vimrc_override'))
     source $HOME/.vim/vimrc_override
   endif
