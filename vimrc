@@ -68,11 +68,15 @@
   let g:ale_linters = {
   \ 'sh': ['shellcheck', 'shell'],
   \ }
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
 
   " Used as a styler, requires 'vint'.
   Plug 'Vimjas/vint'
 
   " Language server client
+  " Requres language servers.
   Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
@@ -81,6 +85,7 @@
   let g:LanguageClient_serverCommands = {
   \ 'sh': ['bash-language-server', 'start'],
   \ 'vim': ['vim-language-server', '--stdio'],
+  \ 'python': ['pyls'],
   \ }
   let g:markdown_fenced_languages = [
   \ 'vim',
