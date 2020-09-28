@@ -70,7 +70,7 @@
   \ }
   let g:ale_echo_msg_error_str = 'E'
   let g:ale_echo_msg_warning_str = 'W'
-  let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
+  let g:ale_echo_msg_format = '[%linter%] [%code%] [%severity%] %s'
 
   " Used as a styler, requires 'vint'.
   Plug 'Vimjas/vint'
@@ -219,6 +219,10 @@
   call plug#end()
 
   call deoplete#custom#option('ignore_sources', {'_': ['around']})
+  call deoplete#custom#source('_',
+  \ 'max_abbr_width', 0)
+  call deoplete#custom#source('_',
+  \ 'max_menu_width', 0)
 
 
   " GENERAL
@@ -248,7 +252,7 @@
   set wrap
   set textwidth=105
   " enables cursor to always be in the center of the screen when scrolling (when possible).
-  set scrolloff=999
+  set scrolloff=29
   set autoindent
   set smarttab
   set softtabstop=4
@@ -268,6 +272,7 @@
   " set signcolumn=auto
   set noshowmode
   set completeopt=menu,popup
+  set completepopup=align:menu,border:off
 
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
