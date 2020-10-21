@@ -1,4 +1,4 @@
-" vim: set expandtab shiftwidth=2:
+" vim: set shiftwidth=2:expandtab
 
   syntax enable
 
@@ -210,6 +210,13 @@
   let g:gitgutter_preview_win_floating = 1
 
   Plug 'mhinz/vim-startify'
+  let g:startify_lists = [
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ ]
 
   " Local plugins
   if filereadable(glob('$HOME/.vim/vimrc_local_plugins'))
@@ -252,8 +259,9 @@
   set wrap
   set textwidth=105
   " enables cursor to always be in the center of the screen when scrolling (when possible).
-  set scrolloff=29
+  set scrolloff=29 "Temporary fix for fzf buffers on an empty file (original value: 999).
   set autoindent
+  set expandtab
   set smarttab
   set softtabstop=4
   set tabstop=4
@@ -346,8 +354,13 @@
     autocmd!
     " The bash language server is still having problems with some syntax.
     autocmd FileType sh let g:LanguageClient_diagnosticsEnable = 0
+    autocmd FileType sh set noexpandtab
   augroup END
 
+  augroup python
+    autocmd!
+    autocmd FileType python let g:LanguageClient_diagnosticsEnable = 0
+  augroup END
 
 
   " REMAPS
