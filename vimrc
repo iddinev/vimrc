@@ -71,6 +71,8 @@
   let g:ale_echo_msg_error_str = 'E'
   let g:ale_echo_msg_warning_str = 'W'
   let g:ale_echo_msg_format = '[%linter%] [%code%] [%severity%] %s'
+  let g:ale_disable_lsp = '1'
+  let g:ale_completion_enabled = '0'
 
   " Used as a styler, requires 'vint'.
   Plug 'Vimjas/vint'
