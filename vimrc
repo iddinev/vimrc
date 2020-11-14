@@ -53,6 +53,12 @@
   Plug 'Shougo/deoplete.nvim'
   let g:deoplete#enable_at_startup = 1
 
+  Plug 'Shougo/neopairs.vim'
+
+  Plug 'Shougo/neoinclude.vim'
+
+  Plug 'Shougo/context_filetype.vim'
+
   Plug 'roxma/nvim-yarp'
 
   Plug 'roxma/vim-hug-neovim-rpc'
@@ -67,12 +73,13 @@
   " Shell linter requires 'shellcheck'.
   let g:ale_linters = {
   \ 'sh': ['shellcheck', 'shell'],
+  \ 'python': ['mypy', 'pylint', 'pycodestyle']
   \ }
   let g:ale_echo_msg_error_str = 'E'
   let g:ale_echo_msg_warning_str = 'W'
   let g:ale_echo_msg_format = '[%linter%] [%code%] [%severity%] %s'
-  let g:ale_disable_lsp = '1'
-  let g:ale_completion_enabled = '0'
+  let g:ale_disable_lsp = 1
+  let g:ale_completion_enabled = 0
 
   " Used as a styler, requires 'vint'.
   Plug 'Vimjas/vint'
@@ -84,15 +91,18 @@
   \ 'do': 'bash install.sh',
   \ }
   let g:LanguageClient_selectionUI = 'fzf'
+  " let g:LanguageClient_hoverPreview = 'Always'
+  " let g:LanguageClient_loggingLevel = 'DEBUG'
+  " let g:LanguageClient_virtualTextPrefix = ''
+  " let g:LanguageClient_loggingFile =  expand('~/.vim/LanguageClient.log')
+  " let g:LanguageClient_serverStderr = expand('~/.vim/LanguageServer.log')
+  " let g:LanguageClient_settingsPath = expand('~/.vim/settings.json')
+  let g:LanguageClient_showCompletionDocs = 1
   let g:LanguageClient_serverCommands = {
   \ 'sh': ['bash-language-server', 'start'],
   \ 'vim': ['vim-language-server', '--stdio'],
   \ 'python': ['pyls'],
   \ }
-  let g:markdown_fenced_languages = [
-  \ 'vim',
-  \ 'help'
-  \ ]
 
   " Snippets
   Plug 'SirVer/ultisnips'
@@ -195,6 +205,15 @@
   \   }
 
   " Misc
+  Plug 'plasticboy/vim-markdown'
+  let g:vim_markdown_fenced_languages = [
+  \ 'viml=vim',
+  \ 'python=python',
+  \ 'help=help'
+  \ ]
+  set conceallevel=2
+  let g:vim_markdown_conceal = 1
+
   Plug 'junegunn/vim-peekaboo'
 
   Plug 'tpope/vim-dispatch'
@@ -227,7 +246,7 @@
 
   call plug#end()
 
-  call deoplete#custom#option('ignore_sources', {'_': ['around']})
+  call deoplete#custom#option('ignore_sources', {'_': ['around', 'ale']})
   call deoplete#custom#source('_',
   \ 'max_abbr_width', 0)
   call deoplete#custom#source('_',
@@ -242,11 +261,15 @@
 
   set background=dark
   colorscheme PaperColor
+
+  " Custom highlights.
   " Do not highlight the relative line number.
   highlight! link CursorLineNr LineNr
   highlight! link Pmenu MatchParen
+  highlight! link PmenuSel StatusLineNC
   highlight! link DiffRemoved Repeat
   highlight! link DiffAdded Type
+  highlight! link EchoDocPopup Type
   highlight! clear SignColumn
 
   set mouse=a
@@ -283,6 +306,7 @@
   set noshowmode
   set completeopt=menu,popup
   set completepopup=align:menu,border:off
+  set shortmess+=c
 
   " Show trailing white spaces & tabs with the Curosr HL group color.
   match Cursor '\s\+$'
@@ -362,6 +386,11 @@
   augroup python
     autocmd!
     autocmd FileType python let g:LanguageClient_diagnosticsEnable = 0
+  augroup END
+
+  augroup vim
+    autocmd!
+    autocmd FileType vim let g:LanguageClient_diagnosticsEnable = 0
   augroup END
 
 
