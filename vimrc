@@ -13,18 +13,21 @@
 
   call plug#begin('~/.vim/plugged')
 
+  Plug 'junegunn/vim-plug'
+
   " Statusline
   Plug 'vim-airline/vim-airline'
   set laststatus=1
   let g:airline#extensions#tabline#show_buffers = 0
   let g:airline#extensions#tabline#tab_min_count = 2
   let g:airline#extensions#tabline#tabs_label = ''
-  let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
+  let g:airline#extensions#tabline#tab_nr_type = 2 "Splits and tab number.
   let g:airline#extensions#tabline#show_splits = 0
   let g:airline#extensions#tabline#show_tab_type = 0
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#ale#enabled = 1
   let g:airline_powerline_fonts = 1
+  let g:airline#extensions#virtualenv#enabled = 1
 
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='dark'
@@ -46,7 +49,8 @@
   let NERDTreeMapOpenSplit = '<c-x>'
   let NERDTreeMapOpenVSplit = '<c-v>'
 
-  let NERDTreeHighlightCursorline = 0
+  let NERDTreeShowHidden = 1
+  let NERDTreeSortHiddenFirst = 0
 
   " Completion
   " Requires 'pynvim', 'msgpack'.
@@ -68,7 +72,6 @@
   " Linter
   " Some language servers are not yet up to speed with the diagnostics,
   " hence the additional stylers/linters/diagnostics tools.
-
   Plug 'dense-analysis/ale'
   " Shell linter requires 'shellcheck'.
   let g:ale_linters = {
@@ -91,17 +94,19 @@
   \ 'do': 'bash install.sh',
   \ }
   let g:LanguageClient_selectionUI = 'fzf'
-  " let g:LanguageClient_hoverPreview = 'Always'
-  " let g:LanguageClient_loggingLevel = 'DEBUG'
-  " let g:LanguageClient_virtualTextPrefix = ''
-  " let g:LanguageClient_loggingFile =  expand('~/.vim/LanguageClient.log')
-  " let g:LanguageClient_serverStderr = expand('~/.vim/LanguageServer.log')
-  " let g:LanguageClient_settingsPath = expand('~/.vim/settings.json')
+  let g:LanguageClient_hoverPreview = 'Always'
+  " let g:LanguageClient_hoverPreview = 'Never'
   let g:LanguageClient_showCompletionDocs = 1
+  let g:LanguageClient_usePopupHover = 0
+  " let g:LanguageClient_loggingLevel = 'DEBUG'
+  let g:LanguageClient_virtualTextPrefix = ''
+  let g:LanguageClient_loggingFile = expand('~/.vim/LanguageClient.log')
+  let g:LanguageClient_serverStderr = expand('~/.vim/LanguageServer.log')
+  let g:LanguageClient_settingsPath = [expand('~/.vim/settings.json'), '.vim_lc_settings.json']
   let g:LanguageClient_serverCommands = {
   \ 'sh': ['bash-language-server', 'start'],
   \ 'vim': ['vim-language-server', '--stdio'],
-  \ 'python': ['pyls'],
+  \ 'python': ['pyls']
   \ }
 
   " Snippets
@@ -118,8 +123,8 @@
   Plug 'junegunn/gv.vim'
   command! -bang -nargs=* -range=0 GVA :GV --all
 
-  " Fuzzy search.
-  Plug 'junegunn/fzf'
+  " Requires the cli fzf tool.
+  Plug 'junegunn/fzf.vim'
   let g:fzf_layout = {'right': '~40%'}
   let g:fzf_colors = {
   \ 'fg':      ['fg', 'Normal'],
@@ -136,7 +141,6 @@
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-  Plug 'junegunn/fzf.vim'
   let g:fzf_command_prefix = 'FZF'
   let g:fzf_preview_window = 'down:60%'
   let g:fzf_buffers_jump = 1
@@ -209,10 +213,11 @@
   let g:vim_markdown_fenced_languages = [
   \ 'viml=vim',
   \ 'python=python',
-  \ 'help=help'
+  \ 'help=help',
+  \ 'man=man'
   \ ]
-  set conceallevel=2
   let g:vim_markdown_conceal = 1
+  set conceallevel=2
 
   Plug 'junegunn/vim-peekaboo'
 
@@ -229,6 +234,7 @@
   " Works only with git.
   Plug 'airblade/vim-gitgutter'
   let g:gitgutter_preview_win_floating = 1
+  let g:gitgutter_set_sign_backgrounds = 0
 
   Plug 'mhinz/vim-startify'
   let g:startify_lists = [
@@ -239,12 +245,25 @@
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
 
+  Plug 'jmcantrell/vim-virtualenv'
+
   " Local plugins
   if filereadable(glob('$HOME/.vim/vimrc_local_plugins'))
     source $HOME/.vim/vimrc_local_plugins
   endif
 
   call plug#end()
+
+  let g:airline#extensions#branch#format = 'CustomBranchName'
+  function! CustomBranchName(name)
+    let cmd = 'env LANG=C git status --porcelain --branch 2>/dev/null'
+    let output = system(cmd)
+    let ahead = matchstr(output,'ahead \zs\d\+')
+    let ahead = ! empty(ahead) ? ahead . '^' : ''
+    let behind = matchstr(output,'behind \zs\d\+')
+    let behind = ! empty(behind) ? behind . 'v' : ''
+    return ! empty(ahead.behind) ? ahead . behind . '|' . a:name : a:name
+  endfunction
 
   call deoplete#custom#option('ignore_sources', {'_': ['around', 'ale']})
   call deoplete#custom#source('_',
@@ -265,6 +284,7 @@
   " Custom highlights.
   " Do not highlight the relative line number.
   highlight! link CursorLineNr LineNr
+  highlight! link CursorLine MatchParen
   highlight! link Pmenu MatchParen
   highlight! link PmenuSel StatusLineNC
   highlight! link DiffRemoved Repeat
@@ -283,8 +303,8 @@
   set nopaste
   set wrap
   set textwidth=105
-  " enables cursor to always be in the center of the screen when scrolling (when possible).
-  set scrolloff=29 "Temporary fix for fzf buffers on an empty file (original value: 999).
+  " Enables cursor to always be in the center of the screen when scrolling (when possible).
+  set scrolloff=999
   set autoindent
   set expandtab
   set smarttab
@@ -302,7 +322,6 @@
   set fileformats=unix
   set diffopt+=vertical
   set wildmenu
-  " set signcolumn=auto
   set noshowmode
   set completeopt=menu,popup
   set completepopup=align:menu,border:off
@@ -365,17 +384,21 @@
     if &background ==# 'dark'
       let g:airline_theme='papercolor'
       set background=light
-      highlight! link CursorLineNr LineNr
     elseif &background ==# 'light'
       let g:airline_theme='dark'
       set background=dark
-      highlight! link CursorLineNr LineNr
     endif
   endfunction
 
 
   " AUTOCMD
   "======================
+
+  augroup vimrc_color
+    autocmd!
+      autocmd ColorScheme * highlight clear SignColumn
+  augroup END
+
   augroup bash
     autocmd!
     " The bash language server is still having problems with some syntax.
@@ -429,6 +452,11 @@
   nmap      <silent>    <c-h>         :tabprevious<CR>
   nmap      <silent>    <c-l>         :tabnext<CR>
   nmap      <silent>    <c-q>         <Plug>window:quickfix:loop
+  nmap      <silent>    <Leader>z     :setlocal foldexpr=
+    \(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=
+    \~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=\
+    \expr foldlevel=0 foldcolumn=2<CR>
+
 
 
   " OVERRIDES
