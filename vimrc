@@ -123,6 +123,7 @@
   Plug 'junegunn/gv.vim'
   command! -bang -nargs=* -range=0 GVA :GV --all
 
+  " Fuzzy completion
   " Requires the cli fzf tool.
   Plug 'junegunn/fzf.vim'
   let g:fzf_layout = {'right': '~40%'}
@@ -397,6 +398,7 @@
   augroup vimrc_color
     autocmd!
       autocmd ColorScheme * highlight clear SignColumn
+      autocmd ColorScheme * highlight! link CursorLine MatchParen
   augroup END
 
   augroup bash
