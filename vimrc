@@ -399,6 +399,7 @@
     autocmd!
       autocmd ColorScheme * highlight clear SignColumn
       autocmd ColorScheme * highlight! link CursorLine MatchParen
+      autocmd ColorScheme * AirlineRefresh
   augroup END
 
   augroup bash
