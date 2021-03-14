@@ -245,6 +245,10 @@
     \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
+  let g:startify_session_before_save = [
+      \ 'echo "Cleaning up before saving.."',
+      \ 'silent! :tabdo NERDTreeClose'
+      \ ]
 
   Plug 'jmcantrell/vim-virtualenv'
 
