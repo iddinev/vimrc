@@ -46,7 +46,7 @@
   let NERDTreeChDirMode = 3
   " Mirror FZF's hotkeys.
   let NERDTreeMapOpenInTab = '<c-t>'
-  let NERDTreeMapOpenSplit = '<c-x>'
+  let NERDTreeMapOpenSplit = '<c-s>'
   let NERDTreeMapOpenVSplit = '<c-v>'
 
   let NERDTreeShowHidden = 1
@@ -75,9 +75,9 @@
   Plug 'dense-analysis/ale'
   " Shell linter requires 'shellcheck'.
   let g:ale_linters = {
-  \ 'sh': ['shellcheck', 'shell'],
-  \ 'python': ['mypy', 'pylint', 'pycodestyle']
-  \ }
+    \ 'sh': ['shellcheck', 'shell'],
+    \ 'python': ['mypy', 'pylint', 'pycodestyle']
+    \ }
   let g:ale_echo_msg_error_str = 'E'
   let g:ale_echo_msg_warning_str = 'W'
   let g:ale_echo_msg_format = '[%linter%] [%code%] [%severity%] %s'
@@ -90,9 +90,9 @@
   " Language server client
   " Requres language servers.
   Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
   let g:LanguageClient_selectionUI = 'fzf'
   let g:LanguageClient_hoverPreview = 'Always'
   " let g:LanguageClient_hoverPreview = 'Never'
@@ -104,10 +104,10 @@
   let g:LanguageClient_serverStderr = expand('~/.vim/LanguageServer.log')
   let g:LanguageClient_settingsPath = [expand('~/.vim/settings.json'), '.vim_lc_settings.json']
   let g:LanguageClient_serverCommands = {
-  \ 'sh': ['bash-language-server', 'start'],
-  \ 'vim': ['vim-language-server', '--stdio'],
-  \ 'python': ['pyls']
-  \ }
+    \ 'sh': ['bash-language-server', 'start'],
+    \ 'vim': ['vim-language-server', '--stdio'],
+    \ 'python': ['pyls']
+    \ }
 
   " Snippets
   Plug 'SirVer/ultisnips'
@@ -127,20 +127,24 @@
   " Requires the cli fzf tool.
   Plug 'junegunn/fzf.vim'
   let g:fzf_layout = {'right': '~40%'}
+  let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-s': 'split',
+    \ 'ctrl-v': 'vsplit' }
   let g:fzf_colors = {
-  \ 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'Exception', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'LineNr', 'LineNr'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Conditional'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+    \ 'fg':      ['fg', 'Normal'],
+    \ 'bg':      ['bg', 'Normal'],
+    \ 'hl':      ['fg', 'Comment'],
+    \ 'fg+':     ['fg', 'Exception', 'CursorColumn', 'Normal'],
+    \ 'bg+':     ['bg', 'LineNr', 'LineNr'],
+    \ 'hl+':     ['fg', 'Statement'],
+    \ 'info':    ['fg', 'PreProc'],
+    \ 'border':  ['fg', 'Conditional'],
+    \ 'prompt':  ['fg', 'Conditional'],
+    \ 'pointer': ['fg', 'Exception'],
+    \ 'marker':  ['fg', 'Keyword'],
+    \ 'spinner': ['fg', 'Label'],
+    \ 'header':  ['fg', 'Comment'] }
 
   let g:fzf_command_prefix = 'FZF'
   let g:fzf_preview_window = 'down:60%'
@@ -148,36 +152,36 @@
   let g:fzf_commits_log_options = '--graph --all --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
   command! -bar -bang -nargs=? -complete=buffer FZFBuffers
-  \ call fzf#vim#buffers(<q-args>,
-  \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=f1:abort'],
-  \         'window':{'width': 0.3, 'height': 0.6}}, 'down:50%'), <bang>0)
+    \ call fzf#vim#buffers(<q-args>,
+    \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=f1:abort'],
+    \         'window':{'width': 0.5, 'height': 0.6}}, 'down:65%'), <bang>0)
   command! -bang -nargs=? -complete=dir FZFFiles
-  \ call fzf#vim#files(<q-args>,
-  \     fzf#vim#with_preview({'options':
-  \         ['--height=100%', '--bind=f7:abort']}, 'down:70%'), <bang>0)
+    \ call fzf#vim#files(<q-args>,
+    \     fzf#vim#with_preview({'options':
+    \         ['--height=100%', '--bind=f7:abort']}, 'down:70%'), <bang>0)
   " Requires Rg.
   command! -bang -nargs=* FZFRg
-  \ call fzf#vim#grep(
-  \     'rg --column --line-number --no-heading --color=always --smart-case -- '
-  \     .shellescape(<q-args>), 1,
-  \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=ctrl-f:abort', '--delimiter=:', '--nth=4..']},
-  \     'down:50%'), <bang>0)
+    \ call fzf#vim#grep(
+    \     'rg --column --line-number --no-heading --color=always --smart-case -- '
+    \     .shellescape(<q-args>), 1,
+    \     fzf#vim#with_preview({'options': ['--height=100%', '--bind=ctrl-f:abort', '--delimiter=:', '--nth=4..']},
+    \     'down:50%'), <bang>0)
   command! -bang -nargs=* FZFRgAll
-  \ call fzf#vim#grep(
-  \     'rg --column --no-ignore --line-number --no-heading --color=always --smart-case '
-  \     .shellescape(<q-args>), 1,
-  \     fzf#vim#with_preview({'options': ['--height=100%', '--delimiter=:', '--nth=4..']},
-  \     'down:50%'), <bang>0)
+    \ call fzf#vim#grep(
+    \     'rg --column --no-ignore --line-number --no-heading --color=always --smart-case '
+    \     .shellescape(<q-args>), 1,
+    \     fzf#vim#with_preview({'options': ['--height=100%', '--delimiter=:', '--nth=4..']},
+    \     'down:50%'), <bang>0)
   command! -bar -bang FZFCommits
-  \ call fzf#vim#commits({'options':
-  \     ['--preview',
-  \     'echo {} | grep -o "[a-f0-9]\{7,\}" | head -1 | xargs git show --stat --format=fuller --color=always',
-  \     '--preview-window=down:50%']}, <bang>0)
+    \ call fzf#vim#commits({'options':
+    \     ['--preview',
+    \     'echo {} | grep -o "[a-f0-9]\{7,\}" | head -1 | xargs git show --stat --format=fuller --color=always',
+    \     '--preview-window=down:50%']}, <bang>0)
   command! -bar -bang FZFBCommits
-  \ call fzf#vim#buffer_commits({'options':
-  \     ['--preview',
-  \     'echo {} | grep -o "[a-f0-9]\{7,\}" | head -1 | xargs git show --stat --format=fuller --color=always',
-  \     '--preview-window=down:50%']}, <bang>0)
+    \ call fzf#vim#buffer_commits({'options':
+    \     ['--preview',
+    \     'echo {} | grep -o "[a-f0-9]\{7,\}" | head -1 | xargs git show --stat --format=fuller --color=always',
+    \     '--preview-window=down:50%']}, <bang>0)
 
   " Main colorscheme
   Plug 'NLKNguyen/papercolor-theme'
@@ -186,37 +190,37 @@
   " The terminal pallete can still be used through the override functionality.
   " Force set the background to use the terminal one.
   let g:PaperColor_Theme_Options = {
-  \     'theme': {
-  \       'default.dark': {
-  \         'transparent_background' : 1,
-  \         'allow_bold' : 1
-  \       },
-  \       'default.light': {
-  \         'transparent_background' : 1,
-  \         'allow_bold' : 1
-  \       }
-  \     },
-  \     'language': {
-  \       'python': {
-  \         'highlight_builtins' : 1
-  \       },
-  \       'cpp': {
-  \         'highlight_standard_library': 1
-  \       },
-  \       'c': {
-  \         'highlight_builtins' : 1
-  \       }
-  \     }
-  \   }
+    \     'theme': {
+    \       'default.dark': {
+    \         'transparent_background' : 1,
+    \         'allow_bold' : 1
+    \       },
+    \       'default.light': {
+    \         'transparent_background' : 1,
+    \         'allow_bold' : 1
+    \       }
+    \     },
+    \     'language': {
+    \       'python': {
+    \         'highlight_builtins' : 1
+    \       },
+    \       'cpp': {
+    \         'highlight_standard_library': 1
+    \       },
+    \       'c': {
+    \         'highlight_builtins' : 1
+    \       }
+    \     }
+    \   }
 
   " Misc
   Plug 'plasticboy/vim-markdown'
   let g:vim_markdown_fenced_languages = [
-  \ 'viml=vim',
-  \ 'python=python',
-  \ 'help=help',
-  \ 'man=man'
-  \ ]
+    \ 'viml=vim',
+    \ 'python=python',
+    \ 'help=help',
+    \ 'man=man'
+    \ ]
   let g:vim_markdown_conceal = 1
   set conceallevel=2
 
@@ -246,11 +250,17 @@
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
   let g:startify_session_before_save = [
-      \ 'echo "Cleaning up before saving.."',
-      \ 'silent! :tabdo NERDTreeClose'
-      \ ]
+    \ 'echo "Cleaning up before saving.."',
+    \ 'silent! :tabdo NERDTreeClose'
+    \ ]
 
+  " Python virtualenv status line & commands.
   Plug 'jmcantrell/vim-virtualenv'
+
+  Plug 'junegunn/goyo.vim'
+
+  Plug 'junegunn/limelight.vim'
+  let g:limelight_conceal_ctermfg = 'Gray'
 
   " Local plugins
   if filereadable(glob('$HOME/.vim/vimrc_local_plugins'))
@@ -272,9 +282,9 @@
 
   call deoplete#custom#option('ignore_sources', {'_': ['around', 'ale']})
   call deoplete#custom#source('_',
-  \ 'max_abbr_width', 0)
+    \ 'max_abbr_width', 0)
   call deoplete#custom#source('_',
-  \ 'max_menu_width', 0)
+    \ 'max_menu_width', 0)
 
 
   " GENERAL
@@ -327,6 +337,7 @@
   set fileformats=unix
   set diffopt+=vertical
   set wildmenu
+  set wildmode=longest:full,full
   set noshowmode
   set completeopt=menu,popup
   set completepopup=align:menu,border:off
@@ -352,6 +363,7 @@
   function! ToggleSpecialChars()
   " mapped to F5
     if g:show_special_chars == 0
+      " Trailing whitespace is intentional.
       set listchars=tab:\|\ ,trail:\ 
       let g:show_special_chars = 1
     elseif g:show_special_chars == 1
@@ -421,6 +433,11 @@
   augroup vim
     autocmd!
     autocmd FileType vim let g:LanguageClient_diagnosticsEnable = 0
+  augroup END
+
+  augroup user
+    autocmd! User GoyoEnter Limelight
+    autocmd! User GoyoLeave Limelight!
   augroup END
 
 
