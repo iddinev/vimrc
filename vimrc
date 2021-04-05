@@ -258,6 +258,7 @@
   Plug 'jmcantrell/vim-virtualenv'
 
   Plug 'junegunn/goyo.vim'
+  let g:goyo_width = '85%'
 
   Plug 'junegunn/limelight.vim'
   let g:limelight_conceal_ctermfg = 'Gray'
@@ -317,6 +318,11 @@
 
   set nopaste
   set wrap
+  set linebreak
+  " Trailing whitespace is intentional.
+  set showbreak=\ \ >>\ \ 
+  set breakindentopt=min:20,shift:0,sbr
+  set breakindent
   set textwidth=105
   " Enables cursor to always be in the center of the screen when scrolling (when possible).
   set scrolloff=999
@@ -436,8 +442,8 @@
   augroup END
 
   augroup user
-    autocmd! User GoyoEnter Limelight
-    autocmd! User GoyoLeave Limelight!
+    autocmd! User GoyoEnter let g:goyo_showbreak = &showbreak | set showbreak= | Limelight
+    autocmd! User GoyoLeave let &showbreak=g:goyo_showbreak | Limelight!
   augroup END
 
 
