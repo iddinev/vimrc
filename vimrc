@@ -196,7 +196,7 @@
     \         'allow_bold' : 1
     \       },
     \       'default.light': {
-    \         'transparent_background' : 1,
+    \         'transparent_background' : 0,
     \         'allow_bold' : 1
     \       }
     \     },
@@ -213,6 +213,9 @@
     \     }
     \   }
 
+  Plug 'altercation/vim-colors-solarized'
+  Plug 'junegunn/seoul256.vim'
+
   " Misc
   Plug 'plasticboy/vim-markdown'
   let g:vim_markdown_fenced_languages = [
@@ -222,6 +225,8 @@
     \ 'man=man'
     \ ]
   let g:vim_markdown_conceal = 1
+  let g:vim_markdown_edit_url_in = 'vsplit'
+  let g:vim_markdown_folding_disabled = 1
   set conceallevel=2
 
   Plug 'junegunn/vim-peekaboo'
@@ -407,9 +412,11 @@
     if &background ==# 'dark'
       let g:airline_theme='papercolor'
       set background=light
+      let g:limelight_conceal_ctermfg = 'DarkGray'
     elseif &background ==# 'light'
       let g:airline_theme='dark'
       set background=dark
+      let g:limelight_conceal_ctermfg = 'Gray'
     endif
   endfunction
 
@@ -441,10 +448,10 @@
     autocmd FileType vim let g:LanguageClient_diagnosticsEnable = 0
   augroup END
 
-  augroup user
-    autocmd! User GoyoEnter let g:goyo_showbreak = &showbreak | set showbreak= | Limelight
-    autocmd! User GoyoLeave let &showbreak=g:goyo_showbreak | Limelight!
-  augroup END
+  " augroup user
+    " autocmd! User GoyoEnter let g:goyo_showbreak = &showbreak | set showbreak= | Limelight
+    " autocmd! User GoyoLeave let &showbreak=g:goyo_showbreak | Limelight!
+  " augroup END
 
 
   " REMAPS
