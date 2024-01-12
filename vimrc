@@ -106,7 +106,7 @@
   let g:LanguageClient_serverCommands = {
     \ 'sh': ['bash-language-server', 'start'],
     \ 'vim': ['vim-language-server', '--stdio'],
-    \ 'python': ['pyls']
+    \ 'python': ['pylsp']
     \ }
 
   " Snippets
@@ -227,7 +227,13 @@
   let g:vim_markdown_conceal = 1
   let g:vim_markdown_edit_url_in = 'vsplit'
   let g:vim_markdown_folding_disabled = 1
+  let g:vim_markdown_follow_anchor = 1
+  let g:vim_markdown_anchorexpr = "substitute(v:anchor, '-', ' ', 'g')"
+
   set conceallevel=2
+
+  " Python fold
+  Plug 'tmhedberg/SimpylFold'
 
   Plug 'junegunn/vim-peekaboo'
 
@@ -316,6 +322,7 @@
   set mouse=a
   set backspace=2
   set nohlsearch
+  set incsearch
   set ignorecase
   set smartcase
   set ruler
@@ -378,7 +385,7 @@
       set listchars=tab:\|\ ,trail:\ 
       let g:show_special_chars = 1
     elseif g:show_special_chars == 1
-      set listchars=tab:>-,trail:-,eol:$
+      set listchars=tab:>-,trail:_,eol:$
       let g:show_special_chars = 0
     endif
   endfunction
