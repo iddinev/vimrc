@@ -487,10 +487,10 @@
   nmap      <silent>    <Leader>s     <Plug>(lcn-symbols)
   nmap      <silent>    <Leader>l     <Plug>(lcn-highlight)
   nmap      <silent>    <Leader>m     <Plug>(lcn-menu)
-  nmap      <silent>    [q            :cprevious<CR>
-  nmap      <silent>    ]q            :cnext<CR>
-  nmap      <silent>    [l            :lprevious <CR>
-  nmap      <silent>    ]l            :lnext<CR>
+  nmap      <silent>    [q            :cabove<CR>
+  nmap      <silent>    ]q            :cbelow<CR>
+  nmap      <silent>    [l            :labove <CR>
+  nmap      <silent>    ]l            :lbelow<CR>
   nmap      <silent>    <c-f>         :FZFRg<CR>
   nmap      <silent>    <c-g>         :FZFRgAll<CR>
   nmap      <silent>    <c-r>         :FZFHistory:<CR>
