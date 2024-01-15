@@ -106,7 +106,7 @@
   let g:LanguageClient_serverCommands = {
     \ 'sh': ['bash-language-server', 'start'],
     \ 'vim': ['vim-language-server', '--stdio'],
-    \ 'python': ['pyls']
+    \ 'python': ['pylsp']
     \ }
 
   " Snippets
@@ -264,6 +264,8 @@
 
   Plug 'junegunn/goyo.vim'
   let g:goyo_width = '85%'
+
+  Plug 'rbong/vim-flog'
 
   Plug 'junegunn/limelight.vim'
   let g:limelight_conceal_ctermfg = 'Gray'
