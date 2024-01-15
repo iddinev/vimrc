@@ -230,6 +230,15 @@
   let g:vim_markdown_follow_anchor = 1
   let g:vim_markdown_anchorexpr = "substitute(v:anchor, '-', ' ', 'g')"
 
+  Plug 'tpope/vim-surround'
+
+  Plug 'vim-scripts/argtextobj.vim'
+
+  Plug 'michaeljsmith/vim-indent-object'
+
+  Plug 'bkad/CamelCaseMotion'
+  let g:camelcasemotion_key = ','
+
   set conceallevel=2
 
   " Python fold
